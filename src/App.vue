@@ -1,7 +1,10 @@
 <template>
   <div id="app">
-    <h1>Perceptrón</h1>
-    <Main/>
+    <el-container>
+      <el-main>
+        <Main/>
+      </el-main>
+    </el-container>
   </div>
 </template>
 
