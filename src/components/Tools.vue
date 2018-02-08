@@ -22,11 +22,12 @@ import Component from 'vue-class-component';
 import {
   TOOL_POINT_TYPE_1,
   TOOL_POINT_TYPE_2,
+  DEFAULT_TOOL,
 } from '../const';
 
 @Component()
 export default class Tools extends Vue {
-  selected = TOOL_POINT_TYPE_1;
+  selected = DEFAULT_TOOL;
   tools = {
     pointType1: TOOL_POINT_TYPE_1,
     pointType2: TOOL_POINT_TYPE_2,

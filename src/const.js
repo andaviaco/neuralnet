@@ -10,6 +10,12 @@ export const LOWER_SCALE_DOMAIN = -10;
 
 export const TOOL_POINT_TYPE_1 = 'plus';
 export const TOOL_POINT_TYPE_2 = 'minus';
+export const DEFAULT_TOOL = TOOL_POINT_TYPE_1;
+
+export const toolColorMap = {
+  [TOOL_POINT_TYPE_1]: 'green',
+  [TOOL_POINT_TYPE_2]: 'blue',
+};
 
 export default {
   DEFAULT_MAX_EPOCH,
@@ -21,4 +27,6 @@ export default {
   LOWER_SCALE_DOMAIN,
   TOOL_POINT_TYPE_1,
   TOOL_POINT_TYPE_2,
+  DEFAULT_TOOL,
+  toolColorMap,
 };

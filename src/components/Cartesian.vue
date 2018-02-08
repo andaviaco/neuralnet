@@ -17,8 +17,8 @@
       :key="index"
       :cx="p.x"
       :cy="p.y"
+      :fill="p.color"
       r="5"
-      fill="purple"
     />
 
     <line x1="250" y1="250" x2="40" y2="40" stroke="gray" stroke-width="3" stroke-opacity="0.2" />
@@ -36,6 +36,9 @@ import {
   SVG_CARTESIAN_PADDING,
   UPPER_SCALE_DOMAIN,
   LOWER_SCALE_DOMAIN,
+  TOOL_POINT_TYPE_1,
+  TOOL_POINT_TYPE_2,
+  toolColorMap,
 } from '../const';
 
 
@@ -61,10 +64,14 @@ export default class Cartesian extends Vue {
   }
 
   clickCoord({ offsetX, offsetY }) {
-    this.points.push({ x: offsetX, y: offsetY });
+    const { selectedTool } = this.$store.state;
 
-    console.log('X:', offsetX, this.xScale.invert(offsetX));
-    console.log('Y:', offsetY, this.yScale.invert(offsetY));
+    if ([TOOL_POINT_TYPE_1, TOOL_POINT_TYPE_2].includes(selectedTool)) {
+      this.points.push({ x: offsetX, y: offsetY, color: toolColorMap[selectedTool] });
+
+      console.log('X:', offsetX, this.xScale.invert(offsetX));
+      console.log('Y:', offsetY, this.yScale.invert(offsetY));
+    }
   }
 
   getScales() {

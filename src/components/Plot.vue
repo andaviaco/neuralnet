@@ -8,8 +8,11 @@
 
 <script>
 import Component from 'vue-class-component';
+
 import Cartesian from './Cartesian.vue';
 import Tools from './Tools.vue';
+
+import { UPDATE_SELECTED_TOOL } from '../store/index';
 
 @Component({
   components: {
@@ -19,7 +22,7 @@ import Tools from './Tools.vue';
 })
 export default class Plot {
   handleToolSelect(selectedTool) {
-    console.log(selectedTool, this.ok);
+    this.$store.commit(UPDATE_SELECTED_TOOL, { tool: selectedTool });
   }
 }
 </script>

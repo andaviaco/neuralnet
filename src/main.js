@@ -5,7 +5,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import 'element-ui/lib/theme-chalk/reset.css';
 
 import App from './App.vue';
-import store from './store';
+import store from './store/index';
 
 Vue.config.productionTip = false;
 
