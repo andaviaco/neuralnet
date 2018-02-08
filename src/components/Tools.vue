@@ -2,12 +2,14 @@
   <el-button-group>
     <el-button
       type="success"
-      icon="el-icon-circle-plus-outline"
+      size="medium"
+      icon="el-icon-circle-plus"
       :disabled="selected === tools.pointType2"
       @click="handleToolSelect(tools.pointType2)"
     />
     <el-button
       type="primary"
+      size="medium"
       icon="el-icon-remove-outline"
       :disabled="selected === tools.pointType1"
       @click="handleToolSelect(tools.pointType1)"

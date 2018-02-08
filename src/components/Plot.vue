@@ -1,8 +1,9 @@
 <template lang="html">
   <section>
+    <Tools @selectTool="handleToolSelect"/>
     <Cartesian />
 
-    <Tools @selectTool="handleToolSelect"/>
+    <Status />
   </section>
 </template>
 
@@ -11,6 +12,7 @@ import Component from 'vue-class-component';
 
 import Cartesian from './Cartesian.vue';
 import Tools from './Tools.vue';
+import Status from './Status.vue';
 
 import { UPDATE_SELECTED_TOOL } from '../store/index';
 
@@ -18,6 +20,7 @@ import { UPDATE_SELECTED_TOOL } from '../store/index';
   components: {
     Cartesian,
     Tools,
+    Status,
   },
 })
 export default class Plot {
