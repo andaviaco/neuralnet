@@ -8,13 +8,21 @@ export const SVG_CARTESIAN_PADDING = 10;
 export const UPPER_SCALE_DOMAIN = 10;
 export const LOWER_SCALE_DOMAIN = -10;
 
+export const POINT_TYPE_1 = 1;
+export const POINT_TYPE_2 = 0;
+
 export const TOOL_POINT_TYPE_1 = 'plus';
 export const TOOL_POINT_TYPE_2 = 'minus';
 export const DEFAULT_TOOL = TOOL_POINT_TYPE_1;
 
-export const toolColorMap = {
-  [TOOL_POINT_TYPE_1]: 'green',
-  [TOOL_POINT_TYPE_2]: 'blue',
+export const pointTypeColorMap = {
+  [POINT_TYPE_1]: 'green',
+  [POINT_TYPE_2]: 'blue',
+};
+
+export const toolPointTypeMap = {
+  [TOOL_POINT_TYPE_1]: POINT_TYPE_1,
+  [TOOL_POINT_TYPE_2]: POINT_TYPE_2,
 };
 
 export default {
@@ -28,5 +36,6 @@ export default {
   TOOL_POINT_TYPE_1,
   TOOL_POINT_TYPE_2,
   DEFAULT_TOOL,
-  toolColorMap,
+  pointTypeColorMap,
+  toolPointTypeMap,
 };

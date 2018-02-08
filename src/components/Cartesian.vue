@@ -30,6 +30,7 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 import * as d3 from 'd3';
 
+import { ADD_POINT } from '../store/index';
 import {
   SVG_CARTESIAN_WIDTH,
   SVG_CARTESIAN_HEIGHT,
@@ -38,7 +39,8 @@ import {
   LOWER_SCALE_DOMAIN,
   TOOL_POINT_TYPE_1,
   TOOL_POINT_TYPE_2,
-  toolColorMap,
+  pointTypeColorMap,
+  toolPointTypeMap,
 } from '../const';
 
 
@@ -57,21 +59,34 @@ export default class Cartesian extends Vue {
   xAxisId = 'xAxis';
   yAxisId = 'yAxis';
 
-  points = [];
-
   mounted() {
     this.drawPlain();
+  }
+
+  get points() {
+    const { points } = this.$store.state;
+
+    return points.map(p => ({
+      x: this.xScale(p.x),
+      y: this.yScale(p.y),
+      color: pointTypeColorMap[p.type],
+    }));
   }
 
   clickCoord({ offsetX, offsetY }) {
     const { selectedTool } = this.$store.state;
 
     if ([TOOL_POINT_TYPE_1, TOOL_POINT_TYPE_2].includes(selectedTool)) {
-      this.points.push({ x: offsetX, y: offsetY, color: toolColorMap[selectedTool] });
-
-      console.log('X:', offsetX, this.xScale.invert(offsetX));
-      console.log('Y:', offsetY, this.yScale.invert(offsetY));
+      this.storePoint(offsetX, offsetY, toolPointTypeMap[selectedTool]);
     }
+  }
+
+  storePoint(offsetX, offsetY, type) {
+    this.$store.commit(ADD_POINT, {
+      x: this.xScale.invert(offsetX),
+      y: this.yScale.invert(offsetY),
+      type,
+    });
   }
 
   getScales() {

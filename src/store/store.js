@@ -15,19 +15,23 @@ export default new Vuex.Store({
     selectedTool: DEFAULT_TOOL,
     learningRate: DEFAULT_LEARNING_RATE,
     maxEpoch: DEFAULT_MAX_EPOCH,
+    points: [],
   },
   mutations: {
     /* eslint-disable no-param-reassign  */
     /* eslint-disable import/no-named-as-default-member  */
 
-    [types.UPDATE_SELECTED_TOOL](state, payload) {
-      state.selectedTool = payload.tool;
+    [types.UPDATE_SELECTED_TOOL](state, { tool }) {
+      state.selectedTool = tool;
     },
-    [types.UPDATE_LEARNING_RATE](state, payload) {
-      state.learningRate = payload.learningRate;
+    [types.UPDATE_LEARNING_RATE](state, { learningRate }) {
+      state.learningRate = learningRate;
     },
-    [types.UPDATE_MAX_EPOCH](state, payload) {
-      state.maxEpoch = payload.maxEpoch;
+    [types.UPDATE_MAX_EPOCH](state, { maxEpoch }) {
+      state.maxEpoch = maxEpoch;
+    },
+    [types.ADD_POINT](state, { x, y, type }) {
+      state.points = [...state.points, { x, y, type }];
     },
   },
   actions: {
