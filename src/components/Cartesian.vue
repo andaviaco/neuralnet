@@ -21,7 +21,17 @@
       r="5"
     />
 
-    <line x1="250" y1="250" x2="40" y2="40" stroke="gray" stroke-width="3" stroke-opacity="0.2" />
+    <line
+      v-for="(l, index) in lines"
+      :key="index + l"
+      :x1="l.x1"
+      :y1="l.y1"
+      :x2="l.x2"
+      :y2="l.y2"
+      :stroke="l.color"
+      stroke-width="3"
+      stroke-opacity="0.2"
+    />
   </svg>
 </template>
 
@@ -41,6 +51,7 @@ import {
   TOOL_POINT_TYPE_2,
   pointTypeColorMap,
   toolPointTypeMap,
+  lineTypecolorMap,
 } from '../const';
 
 
@@ -71,6 +82,23 @@ export default class Cartesian extends Vue {
       y: this.yScale(p.y),
       color: pointTypeColorMap[p.type],
     }));
+  }
+
+  get lines() {
+    const { lines } = this.$store.state;
+
+    return lines.map(({ point1, point2, type }) => {
+      const [x1, y1] = point1;
+      const [x2, y2] = point2;
+
+      return {
+        x1: this.xScale(x1),
+        y1: this.yScale(y1),
+        x2: this.xScale(x2),
+        y2: this.yScale(y2),
+        color: lineTypecolorMap[type],
+      };
+    });
   }
 
   clickCoord({ offsetX, offsetY }) {

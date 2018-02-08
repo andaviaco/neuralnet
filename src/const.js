@@ -25,6 +25,14 @@ export const toolPointTypeMap = {
   [TOOL_POINT_TYPE_2]: POINT_TYPE_2,
 };
 
+export const LINE_TYPE_UNTRAINED = 'untrained';
+export const LINE_TYPE_TRAINED = 'trained';
+
+export const lineTypecolorMap = {
+  [LINE_TYPE_UNTRAINED]: 'gray',
+  [LINE_TYPE_TRAINED]: 'red',
+};
+
 export default {
   DEFAULT_MAX_EPOCH,
   DEFAULT_LEARNING_RATE,
@@ -33,9 +41,18 @@ export default {
   SVG_CARTESIAN_PADDING,
   UPPER_SCALE_DOMAIN,
   LOWER_SCALE_DOMAIN,
+
+  POINT_TYPE_1,
+  POINT_TYPE_2,
+
   TOOL_POINT_TYPE_1,
   TOOL_POINT_TYPE_2,
   DEFAULT_TOOL,
+
   pointTypeColorMap,
   toolPointTypeMap,
+
+  LINE_TYPE_UNTRAINED,
+  LINE_TYPE_TRAINED,
+  lineTypecolorMap,
 };

@@ -16,6 +16,7 @@ export default new Vuex.Store({
     learningRate: DEFAULT_LEARNING_RATE,
     maxEpoch: DEFAULT_MAX_EPOCH,
     points: [],
+    lines: [],
   },
   getters: {
     pointAsArrays(state) {
@@ -37,6 +38,9 @@ export default new Vuex.Store({
     },
     [types.ADD_POINT](state, { x, y, type }) {
       state.points = [...state.points, { x, y, type }];
+    },
+    [types.ADD_LINE](state, { point1, point2, type }) {
+      state.lines = [...state.lines, { point1, point2, type }];
     },
   },
   actions: {
