@@ -1,6 +1,7 @@
 <template>
   <section>
-    <h1>Redes Neuronales</h1>
+    <h1>Redes Neuronales: Perceptrón</h1>
+
     <el-row>
       <el-col :span="12">
         <Plot />
@@ -33,9 +34,16 @@ export default class Main {
       maxEpoch,
     });
 
-    this.$store.dispatch('trainPerceptron', {
+    const isTrained = await this.$store.dispatch('trainPerceptron', {
       inputs: pointAsArrays,
     });
+
+    if (!isTrained) {
+      this.$message({
+        message: 'No se encontró separación lineal.',
+        type: 'warning',
+      });
+    }
   }
 }
 

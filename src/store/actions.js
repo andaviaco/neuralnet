@@ -21,12 +21,14 @@ export default {
   },
 
   async trainPerceptron({ commit, dispatch }, { inputs }) {
-    await PerceptronService.trainPerceptron(inputs);
+    const result = await PerceptronService.trainPerceptron(inputs);
 
     commit(UPDATE_PERCEPTRON_STATUS, { status: PerceptronService.status });
     commit(UPDATE_PERCEPTRON_EPOCH, { epoch: PerceptronService.epoch });
 
     dispatch('drawPerceptronLine');
+
+    return result;
   },
 
   addUnclassifiedPoint({ commit }, { x, y }) {

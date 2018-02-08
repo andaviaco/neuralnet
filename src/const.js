@@ -49,6 +49,12 @@ export const perceptronStateMap = {
   [perceptronStates.TRAINED]: PERCEPTRON_STATUS_TRAINED,
 };
 
+export const statusColorMap = {
+  [PERCEPTRON_STATUS_UNTRAINED]: 'danger',
+  [PERCEPTRON_STATUS_TRAINING]: 'warning',
+  [PERCEPTRON_STATUS_TRAINED]: 'success',
+};
+
 export default {
   DEFAULT_MAX_EPOCH,
   DEFAULT_LEARNING_RATE,
@@ -77,4 +83,5 @@ export default {
   PERCEPTRON_STATUS_TRAINED,
   perceptronStates,
   perceptronStateMap,
+  statusColorMap,
 };
