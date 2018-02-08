@@ -30,7 +30,7 @@
       :y2="l.y2"
       :stroke="l.color"
       stroke-width="3"
-      stroke-opacity="0.2"
+      stroke-opacity="0.4"
     />
   </svg>
 </template>
