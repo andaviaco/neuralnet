@@ -20,7 +20,10 @@ class PerceptronService {
   }
 
   setPerceptron(learningRate, maxEpoch) {
-    this.perceptron = new Perceptron(learningRate, maxEpoch);
+    this.perceptron = new Perceptron(learningRate, maxEpoch, {
+      upperBound: UPPER_SCALE_DOMAIN,
+      lowerBound: LOWER_SCALE_DOMAIN,
+    });
   }
 
   trainPerceptron(inputs) {
