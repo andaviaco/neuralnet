@@ -8,6 +8,9 @@ export const SVG_CARTESIAN_PADDING = 10;
 export const UPPER_SCALE_DOMAIN = 10;
 export const LOWER_SCALE_DOMAIN = -10;
 
+export const TOOL_POINT_TYPE_1 = 'plus';
+export const TOOL_POINT_TYPE_2 = 'minus';
+
 export default {
   DEFAULT_MAX_EPOCH,
   DEFAULT_LEARNING_RATE,
@@ -16,4 +19,6 @@ export default {
   SVG_CARTESIAN_PADDING,
   UPPER_SCALE_DOMAIN,
   LOWER_SCALE_DOMAIN,
+  TOOL_POINT_TYPE_1,
+  TOOL_POINT_TYPE_2,
 };
