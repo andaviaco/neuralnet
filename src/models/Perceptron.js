@@ -82,8 +82,8 @@ export default class Perceptron {
   lineFn(x) {
     const [w0, w1, w2] = this.weights;
 
-    // return `(-${w1}x + ${w0}) / ${w2}`;
-    return ((w1 * x) + w0) / w2;
+    // console.log(`f(x)=(-${w1}x + ${w0}) / ${w2}`);
+    return ((-w1 * x) + w0) / w2;
   }
 
   static formatInput(input) {
