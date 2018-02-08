@@ -33,6 +33,18 @@ export const lineTypecolorMap = {
   [LINE_TYPE_TRAINED]: 'red',
 };
 
+export const perceptronStates = {
+  UNTRAINED: 0,
+  TRAINING: 1,
+  TRAINED: 2,
+};
+
+export const perceptronStateMap = {
+  [perceptronStates.UNTRAINED]: 'untrained',
+  [perceptronStates.TRAINING]: 'training',
+  [perceptronStates.TRAINED]: 'trained',
+};
+
 export default {
   DEFAULT_MAX_EPOCH,
   DEFAULT_LEARNING_RATE,
@@ -55,4 +67,7 @@ export default {
   LINE_TYPE_UNTRAINED,
   LINE_TYPE_TRAINED,
   lineTypecolorMap,
+
+  perceptronStates,
+  perceptronStateMap,
 };

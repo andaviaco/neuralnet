@@ -1,5 +1,5 @@
 import nj from 'numjs';
-import { DEFAULT_LEARNING_RATE, DEFAULT_MAX_EPOCH } from '../const';
+import { DEFAULT_LEARNING_RATE, DEFAULT_MAX_EPOCH, perceptronStates } from '../const';
 
 function randomNumberInRange(min, max) {
   return Math.random() * ((max - min) + min);
@@ -10,16 +10,18 @@ export default class Perceptron {
     this.learningRate = learningRate;
     this.maxEpoch = maxEpoch;
     this.weights = Array.from({ length: 3 }).map(() => randomNumberInRange(-10, 10));
-    this.status = 0;
+    this.status = perceptronStates.UNTRAINED;
   }
 
   get w() {
     return nj.array(this.weights);
   }
 
-  async startTraining(inputs, progressCb) {
+  async startTraining(inputs) {
     let trainingResults = [];
     let isTrained = false;
+
+    this.status = perceptronStates.TRAINING;
 
     for (const epoch of nj.arange(1, this.maxEpoch + 1).tolist()) {
       trainingResults = inputs.map(this.train.bind(this));
@@ -29,16 +31,14 @@ export default class Perceptron {
         break;
       }
 
-      progressCb(epoch);
+      console.log('epoch', epoch);
     }
 
     if (isTrained) {
-      // TODO: set status
+      this.status = perceptronStates.TRAINED;
       console.log('Trained W', this.weights);
       return true;
     }
-
-    console.log('NOPE');
 
     return false;
   }
