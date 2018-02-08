@@ -16,8 +16,8 @@ export const TOOL_POINT_TYPE_2 = 'plus';
 export const DEFAULT_TOOL = TOOL_POINT_TYPE_1;
 
 export const pointTypeColorMap = {
-  [POINT_TYPE_1]: 'blue',
-  [POINT_TYPE_2]: 'green',
+  [POINT_TYPE_1]: '#409EFF', // blue
+  [POINT_TYPE_2]: '#67C23A', // green
 };
 
 export const toolPointTypeMap = {
@@ -29,7 +29,7 @@ export const LINE_TYPE_UNTRAINED = 'untrained';
 export const LINE_TYPE_TRAINED = 'trained';
 
 export const lineTypecolorMap = {
-  [LINE_TYPE_UNTRAINED]: 'gray',
+  [LINE_TYPE_UNTRAINED]: '#909399', // gray
   [LINE_TYPE_TRAINED]: 'red',
 };
 
