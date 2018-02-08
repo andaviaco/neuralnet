@@ -1,16 +1,16 @@
 <template lang="html">
   <el-button-group>
     <el-button
-      type="primary"
+      type="success"
       icon="el-icon-circle-plus-outline"
-      @click="handleToolSelect(tools.pointType2)"
       :disabled="selected === tools.pointType2"
+      @click="handleToolSelect(tools.pointType2)"
     />
     <el-button
-      type="success"
+      type="primary"
       icon="el-icon-remove-outline"
-      @click="handleToolSelect(tools.pointType1)"
       :disabled="selected === tools.pointType1"
+      @click="handleToolSelect(tools.pointType1)"
     />
   </el-button-group>
 </template>
