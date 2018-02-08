@@ -2,10 +2,12 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 import types from './mutation-types';
+import actions from './actions';
 import {
   DEFAULT_TOOL,
   DEFAULT_MAX_EPOCH,
   DEFAULT_LEARNING_RATE,
+  perceptronStates,
 } from '../const';
 
 Vue.use(Vuex);
@@ -17,6 +19,7 @@ export default new Vuex.Store({
     maxEpoch: DEFAULT_MAX_EPOCH,
     points: [],
     lines: [],
+    perceptronStatus: perceptronStates.UNTRAINED,
   },
   getters: {
     pointAsArrays(state) {
@@ -42,8 +45,10 @@ export default new Vuex.Store({
     [types.ADD_LINE](state, { point1, point2, type }) {
       state.lines = [...state.lines, { point1, point2, type }];
     },
+    [types.UPDATE_PERCEPTRON_STATUS](state, { status }) {
+      state.perceptronStatus = status;
+    },
   },
-  actions: {
 
-  },
+  actions,
 });

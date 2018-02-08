@@ -17,11 +17,6 @@ import Component from 'vue-class-component';
 import SetupForm from './SetupForm.vue';
 import Plot from './Plot.vue';
 
-import Perceptron from '../models/Perceptron';
-import {
-  ADD_LINE,
-} from '../store/index';
-
 @Component({
   components: {
     SetupForm,
@@ -33,29 +28,14 @@ export default class Main {
     const { learningRate, maxEpoch } = this.$store.state;
     const { pointAsArrays } = this.$store.getters;
 
-    const perceptron = new Perceptron(learningRate, maxEpoch);
-    const untrainedLine = {
-      point1: [10, perceptron.lineFn(10)],
-      point2: [-10, perceptron.lineFn(-10)],
-      type: 'untrained',
-    };
-    this.$store.commit(ADD_LINE, untrainedLine);
-
-    const isTrained = await perceptron.startTraining(pointAsArrays, (epoch) => {
-      console.log('progress', epoch);
+    this.$store.dispatch('setPerceptron', {
+      learningRate,
+      maxEpoch,
     });
 
-    console.log('result', isTrained);
-
-    if (isTrained) {
-      const trainedLine = {
-        point1: [10, perceptron.lineFn(10)],
-        point2: [-10, perceptron.lineFn(-10)],
-        type: 'trained',
-      };
-      this.$store.commit(ADD_LINE, trainedLine);
-      console.log('f(10)', trainedLine);
-    }
+    this.$store.dispatch('trainPerceptron', {
+      inputs: pointAsArrays,
+    });
   }
 }
 
