@@ -39,10 +39,14 @@ export const perceptronStates = {
   TRAINED: 2,
 };
 
+export const PERCEPTRON_STATUS_UNTRAINED = 'untrained';
+export const PERCEPTRON_STATUS_TRAINING = 'training';
+export const PERCEPTRON_STATUS_TRAINED = 'trained';
+
 export const perceptronStateMap = {
-  [perceptronStates.UNTRAINED]: 'untrained',
-  [perceptronStates.TRAINING]: 'training',
-  [perceptronStates.TRAINED]: 'trained',
+  [perceptronStates.UNTRAINED]: PERCEPTRON_STATUS_UNTRAINED,
+  [perceptronStates.TRAINING]: PERCEPTRON_STATUS_TRAINING,
+  [perceptronStates.TRAINED]: PERCEPTRON_STATUS_TRAINED,
 };
 
 export default {
@@ -68,6 +72,9 @@ export default {
   LINE_TYPE_TRAINED,
   lineTypecolorMap,
 
+  PERCEPTRON_STATUS_UNTRAINED,
+  PERCEPTRON_STATUS_TRAINING,
+  PERCEPTRON_STATUS_TRAINED,
   perceptronStates,
   perceptronStateMap,
 };
