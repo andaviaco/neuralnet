@@ -7,7 +7,7 @@ import {
   DEFAULT_TOOL,
   DEFAULT_MAX_EPOCH,
   DEFAULT_LEARNING_RATE,
-  perceptronStates,
+  PERCEPTRON_STATUS_UNTRAINED,
 } from '../const';
 
 Vue.use(Vuex);
@@ -19,7 +19,7 @@ export default new Vuex.Store({
     maxEpoch: DEFAULT_MAX_EPOCH,
     points: [],
     lines: [],
-    perceptronStatus: perceptronStates.UNTRAINED,
+    perceptronStatus: PERCEPTRON_STATUS_UNTRAINED,
   },
   getters: {
     pointAsArrays(state) {

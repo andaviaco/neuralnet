@@ -1,5 +1,9 @@
 import PerceptronService from '../PerceptronService';
-import { ADD_LINE, UPDATE_PERCEPTRON_STATUS } from './mutation-types';
+import {
+  ADD_LINE,
+  ADD_POINT,
+  UPDATE_PERCEPTRON_STATUS,
+} from './mutation-types';
 
 
 export default {
@@ -21,5 +25,11 @@ export default {
     commit(UPDATE_PERCEPTRON_STATUS, { status: PerceptronService.status });
 
     dispatch('drawPerceptronLine');
+  },
+
+  addUnclassifiedPoint({ commit }, { x, y }) {
+    const classification = PerceptronService.classifyInput([x, y]);
+
+    commit(ADD_POINT, { x, y, type: classification });
   },
 };

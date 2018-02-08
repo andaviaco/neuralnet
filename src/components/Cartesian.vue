@@ -52,6 +52,7 @@ import {
   pointTypeColorMap,
   toolPointTypeMap,
   lineTypecolorMap,
+  PERCEPTRON_STATUS_TRAINED,
 } from '../const';
 
 
@@ -102,19 +103,29 @@ export default class Cartesian extends Vue {
   }
 
   clickCoord({ offsetX, offsetY }) {
-    const { selectedTool } = this.$store.state;
+    const { selectedTool, perceptronStatus } = this.$store.state;
 
     if ([TOOL_POINT_TYPE_1, TOOL_POINT_TYPE_2].includes(selectedTool)) {
-      this.storePoint(offsetX, offsetY, toolPointTypeMap[selectedTool]);
+      if (perceptronStatus === PERCEPTRON_STATUS_TRAINED) {
+        this.$store.dispatch('addUnclassifiedPoint', this.formatPoint(offsetX, offsetY));
+      } else {
+        this.storePoint(offsetX, offsetY, toolPointTypeMap[selectedTool]);
+      }
     }
   }
 
-  storePoint(offsetX, offsetY, type) {
-    this.$store.commit(ADD_POINT, {
+  formatPoint(offsetX, offsetY, type) {
+    return {
       x: this.xScale.invert(offsetX),
       y: this.yScale.invert(offsetY),
       type,
-    });
+    };
+  }
+
+  storePoint(offsetX, offsetY, type) {
+    const point = this.formatPoint(offsetX, offsetY, type);
+
+    this.$store.commit(ADD_POINT, point);
   }
 
   getScales() {
