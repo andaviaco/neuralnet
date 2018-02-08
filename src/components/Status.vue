@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="status-info">
-    <el-tag type="info">Epocas: 0</el-tag>
+    <el-tag type="info">Epocas: {{ perceptronEpoch }}</el-tag>
     <el-tag type="success">Estado: {{ perceptronStatus }}</el-tag>
   </div>
 </template>
@@ -12,6 +12,10 @@ import Component from 'vue-class-component';
 export default class Plot {
   get perceptronStatus() {
     return this.$store.state.perceptronStatus;
+  }
+
+  get perceptronEpoch() {
+    return this.$store.state.perceptronEpoch;
   }
 }
 </script>

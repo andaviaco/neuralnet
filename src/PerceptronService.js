@@ -15,6 +15,10 @@ class PerceptronService {
     return perceptronStateMap[this.perceptron.status];
   }
 
+  get epoch() {
+    return this.perceptron.epoch;
+  }
+
   setPerceptron(learningRate, maxEpoch) {
     this.perceptron = new Perceptron(learningRate, maxEpoch);
   }

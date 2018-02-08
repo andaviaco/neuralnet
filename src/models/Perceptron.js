@@ -11,6 +11,7 @@ export default class Perceptron {
     this.maxEpoch = maxEpoch;
     this.weights = Array.from({ length: 3 }).map(() => randomNumberInRange(-10, 10));
     this.status = perceptronStates.UNTRAINED;
+    this.epoch = 0;
   }
 
   get w() {
@@ -21,26 +22,27 @@ export default class Perceptron {
     let trainingResults = [];
     let isTrained = false;
 
+    this.epoch = 0;
     this.status = perceptronStates.TRAINING;
 
     for (const epoch of nj.arange(1, this.maxEpoch + 1).tolist()) {
+      this.epoch = epoch;
       trainingResults = inputs.map(this.train.bind(this));
 
       if (trainingResults.every(i => i === true)) {
         isTrained = true;
         break;
       }
-
-      console.log('epoch', epoch);
     }
 
     if (isTrained) {
       this.status = perceptronStates.TRAINED;
       console.log('Trained W', this.weights);
-      return true;
+    } else {
+      this.status = perceptronStates.UNTRAINED;
     }
 
-    return false;
+    return isTrained;
   }
 
   set w(newW) {

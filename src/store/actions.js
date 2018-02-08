@@ -3,6 +3,7 @@ import {
   ADD_LINE,
   ADD_POINT,
   UPDATE_PERCEPTRON_STATUS,
+  UPDATE_PERCEPTRON_EPOCH,
 } from './mutation-types';
 
 
@@ -23,6 +24,7 @@ export default {
     await PerceptronService.trainPerceptron(inputs);
 
     commit(UPDATE_PERCEPTRON_STATUS, { status: PerceptronService.status });
+    commit(UPDATE_PERCEPTRON_EPOCH, { epoch: PerceptronService.epoch });
 
     dispatch('drawPerceptronLine');
   },

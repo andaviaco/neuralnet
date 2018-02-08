@@ -20,6 +20,7 @@ export default new Vuex.Store({
     points: [],
     lines: [],
     perceptronStatus: PERCEPTRON_STATUS_UNTRAINED,
+    perceptronEpoch: 0,
   },
   getters: {
     pointAsArrays(state) {
@@ -47,6 +48,9 @@ export default new Vuex.Store({
     },
     [types.UPDATE_PERCEPTRON_STATUS](state, { status }) {
       state.perceptronStatus = status;
+    },
+    [types.UPDATE_PERCEPTRON_EPOCH](state, { epoch }) {
+      state.perceptronEpoch = epoch;
     },
   },
 

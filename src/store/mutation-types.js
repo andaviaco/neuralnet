@@ -5,6 +5,7 @@ export const UPDATE_MAX_EPOCH = 'updateMaxEpoch';
 export const ADD_POINT = 'addPoint';
 export const ADD_LINE = 'addLine';
 export const UPDATE_PERCEPTRON_STATUS = 'updatePerceptronStatus';
+export const UPDATE_PERCEPTRON_EPOCH = 'updatePerceptronEpoch';
 
 export default {
   UPDATE_SELECTED_TOOL,
@@ -13,4 +14,5 @@ export default {
   ADD_POINT,
   ADD_LINE,
   UPDATE_PERCEPTRON_STATUS,
+  UPDATE_PERCEPTRON_EPOCH,
 };
