@@ -10,6 +10,7 @@
   "dependencies": {
     "d3": "^4.13.0",
     "element-ui": "^2.1.0",
+    "numjs": "^0.15.1",
     "vue": "^2.5.13",
     "vue-class-component": "^6.1.2",
     "vuex": "^3.0.1"

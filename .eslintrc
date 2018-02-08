@@ -2,5 +2,8 @@
   "extends": [
     "plugin:vue/essential",
     "@vue/airbnb"
-  ]
+  ],
+  "rules": {
+    "no-restricted-syntax": 1
+  }
 }
