@@ -56,7 +56,7 @@ export default class SetupForm extends Vue {
   }
 
   onSubmit() {
-    console.log(this.maxEpoch, 'startTraining');
+    this.$emit('startTraining');
   }
 }
 </script>

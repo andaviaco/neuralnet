@@ -17,6 +17,11 @@ export default new Vuex.Store({
     maxEpoch: DEFAULT_MAX_EPOCH,
     points: [],
   },
+  getters: {
+    pointAsArrays(state) {
+      return state.points.map(p => [[p.x, p.y], p.type]);
+    },
+  },
   mutations: {
     /* eslint-disable no-param-reassign  */
     /* eslint-disable import/no-named-as-default-member  */
