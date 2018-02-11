@@ -1,9 +1,22 @@
 <template lang="html">
   <section>
-    <Tools @selectTool="handleToolSelect"/>
-    <Cartesian />
+    <el-row>
+      <el-col :span="24">
+        <Tools @selectTool="handleToolSelect"/>
+      </el-col>
+    </el-row>
 
-    <Status />
+    <el-row>
+      <el-col :span="24">
+        <Cartesian />
+      </el-col>
+    </el-row>
+
+    <el-row>
+      <el-col :span="24">
+        <Status />
+      </el-col>
+    </el-row>
   </section>
 </template>
 
