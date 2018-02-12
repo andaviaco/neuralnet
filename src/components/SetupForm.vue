@@ -12,6 +12,18 @@
       </el-slider>
     </el-form-item>
 
+    <el-form-item label="Error deseado">
+      <el-slider
+        :value="desiredError"
+        :min="0.01"
+        :max="0.99"
+        :step="0.01"
+        @input="handleDesiredErrorUpdate"
+        show-input
+      >
+      </el-slider>
+    </el-form-item>
+
     <el-form-item label="Épocas Maximas">
       <el-input-number
         :value="maxEpoch"
@@ -32,7 +44,11 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 
 // import { DEFAULT_MAX_EPOCH, DEFAULT_LEARNING_RATE } from '../const';
-import { UPDATE_LEARNING_RATE, UPDATE_MAX_EPOCH } from '../store/index';
+import {
+  UPDATE_LEARNING_RATE,
+  UPDATE_MAX_EPOCH,
+  UPDATE_DESIRED_ERROR,
+} from '../store/index';
 
 
 @Component
@@ -45,6 +61,10 @@ export default class SetupForm extends Vue {
     return this.$store.state.maxEpoch;
   }
 
+  get desiredError() {
+    return this.$store.state.desiredError;
+  }
+
   handleLearningRateUpdate(value) {
     // TODO: debounce update
     this.$store.commit(UPDATE_LEARNING_RATE, { learningRate: value });
@@ -53,6 +73,11 @@ export default class SetupForm extends Vue {
   handleMaxEpoch(value) {
     // TODO: debounce update
     this.$store.commit(UPDATE_MAX_EPOCH, { maxEpoch: value });
+  }
+
+  handleDesiredErrorUpdate(value) {
+    // TODO: debounce update
+    this.$store.commit(UPDATE_DESIRED_ERROR, { error: value });
   }
 
   onSubmit() {

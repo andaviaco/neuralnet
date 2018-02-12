@@ -7,6 +7,7 @@ import {
   DEFAULT_TOOL,
   DEFAULT_MAX_EPOCH,
   DEFAULT_LEARNING_RATE,
+  DEFAULT_DESIRED_ERROR,
   PERCEPTRON_STATUS_UNTRAINED,
 } from '../const';
 
@@ -21,6 +22,7 @@ export default new Vuex.Store({
     lines: [],
     perceptronStatus: PERCEPTRON_STATUS_UNTRAINED,
     perceptronEpoch: 0,
+    desiredError: DEFAULT_DESIRED_ERROR,
   },
   getters: {
     pointAsArrays(state) {
@@ -51,6 +53,9 @@ export default new Vuex.Store({
     },
     [types.UPDATE_PERCEPTRON_EPOCH](state, { epoch }) {
       state.perceptronEpoch = epoch;
+    },
+    [types.UPDATE_DESIRED_ERROR](state, { error }) {
+      state.desiredError = error;
     },
   },
 
