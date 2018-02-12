@@ -52,7 +52,7 @@ import {
   pointTypeColorMap,
   toolPointTypeMap,
   lineTypecolorMap,
-  PERCEPTRON_STATUS_TRAINED,
+  NEURON_STATUS_TRAINED,
 } from '../const';
 
 
@@ -103,10 +103,10 @@ export default class Cartesian extends Vue {
   }
 
   clickCoord({ offsetX, offsetY }) {
-    const { selectedTool, perceptronStatus } = this.$store.state;
+    const { selectedTool, neuronStatus } = this.$store.state;
 
     if ([TOOL_POINT_TYPE_1, TOOL_POINT_TYPE_2].includes(selectedTool)) {
-      if (perceptronStatus === PERCEPTRON_STATUS_TRAINED) {
+      if (neuronStatus === NEURON_STATUS_TRAINED) {
         this.$store.dispatch('addUnclassifiedPoint', this.formatPoint(offsetX, offsetY));
       } else {
         this.storePoint(offsetX, offsetY, toolPointTypeMap[selectedTool]);

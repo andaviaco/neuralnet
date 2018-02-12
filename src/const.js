@@ -40,20 +40,20 @@ export const neuronStates = {
   TRAINED: 2,
 };
 
-export const PERCEPTRON_STATUS_UNTRAINED = 'untrained';
-export const PERCEPTRON_STATUS_TRAINING = 'training';
-export const PERCEPTRON_STATUS_TRAINED = 'trained';
+export const NEURON_STATUS_UNTRAINED = 'untrained';
+export const NEURON_STATUS_TRAINING = 'training';
+export const NEURON_STATUS_TRAINED = 'trained';
 
 export const perceptronStateMap = {
-  [neuronStates.UNTRAINED]: PERCEPTRON_STATUS_UNTRAINED,
-  [neuronStates.TRAINING]: PERCEPTRON_STATUS_TRAINING,
-  [neuronStates.TRAINED]: PERCEPTRON_STATUS_TRAINED,
+  [neuronStates.UNTRAINED]: NEURON_STATUS_UNTRAINED,
+  [neuronStates.TRAINING]: NEURON_STATUS_TRAINING,
+  [neuronStates.TRAINED]: NEURON_STATUS_TRAINED,
 };
 
 export const statusColorMap = {
-  [PERCEPTRON_STATUS_UNTRAINED]: 'danger',
-  [PERCEPTRON_STATUS_TRAINING]: 'warning',
-  [PERCEPTRON_STATUS_TRAINED]: 'success',
+  [NEURON_STATUS_UNTRAINED]: 'danger',
+  [NEURON_STATUS_TRAINING]: 'warning',
+  [NEURON_STATUS_TRAINED]: 'success',
 };
 
 export default {
@@ -79,9 +79,9 @@ export default {
   LINE_TYPE_TRAINED,
   lineTypecolorMap,
 
-  PERCEPTRON_STATUS_UNTRAINED,
-  PERCEPTRON_STATUS_TRAINING,
-  PERCEPTRON_STATUS_TRAINED,
+  NEURON_STATUS_UNTRAINED,
+  NEURON_STATUS_TRAINING,
+  NEURON_STATUS_TRAINED,
   neuronStates,
   perceptronStateMap,
   statusColorMap,

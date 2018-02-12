@@ -2,8 +2,8 @@ import PerceptronService from '../PerceptronService';
 import {
   ADD_LINE,
   ADD_POINT,
-  UPDATE_PERCEPTRON_STATUS,
-  UPDATE_PERCEPTRON_EPOCH,
+  UPDATE_NEURON_STATUS,
+  UPDATE_NEURON_EPOCH,
 } from './mutation-types';
 
 
@@ -23,8 +23,8 @@ export default {
   async trainPerceptron({ commit, dispatch }, { inputs }) {
     const result = await PerceptronService.trainPerceptron(inputs);
 
-    commit(UPDATE_PERCEPTRON_STATUS, { status: PerceptronService.status });
-    commit(UPDATE_PERCEPTRON_EPOCH, { epoch: PerceptronService.epoch });
+    commit(UPDATE_NEURON_STATUS, { status: PerceptronService.status });
+    commit(UPDATE_NEURON_EPOCH, { epoch: PerceptronService.epoch });
 
     dispatch('drawPerceptronLine');
 

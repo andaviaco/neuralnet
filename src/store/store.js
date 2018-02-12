@@ -8,7 +8,7 @@ import {
   DEFAULT_MAX_EPOCH,
   DEFAULT_LEARNING_RATE,
   DEFAULT_DESIRED_ERROR,
-  PERCEPTRON_STATUS_UNTRAINED,
+  NEURON_STATUS_UNTRAINED,
 } from '../const';
 
 Vue.use(Vuex);
@@ -20,8 +20,8 @@ export default new Vuex.Store({
     maxEpoch: DEFAULT_MAX_EPOCH,
     points: [],
     lines: [],
-    perceptronStatus: PERCEPTRON_STATUS_UNTRAINED,
-    perceptronEpoch: 0,
+    neuronStatus: NEURON_STATUS_UNTRAINED,
+    neuronEpoch: 0,
     desiredError: DEFAULT_DESIRED_ERROR,
   },
   getters: {
@@ -48,11 +48,11 @@ export default new Vuex.Store({
     [types.ADD_LINE](state, { point1, point2, type }) {
       state.lines = [...state.lines, { point1, point2, type }];
     },
-    [types.UPDATE_PERCEPTRON_STATUS](state, { status }) {
-      state.perceptronStatus = status;
+    [types.UPDATE_NEURON_STATUS](state, { status }) {
+      state.neuronStatus = status;
     },
-    [types.UPDATE_PERCEPTRON_EPOCH](state, { epoch }) {
-      state.perceptronEpoch = epoch;
+    [types.UPDATE_NEURON_EPOCH](state, { epoch }) {
+      state.neuronEpoch = epoch;
     },
     [types.UPDATE_DESIRED_ERROR](state, { error }) {
       state.desiredError = error;
