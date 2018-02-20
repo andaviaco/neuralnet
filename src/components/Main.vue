@@ -6,8 +6,12 @@
       <el-col :span="12">
         <Plot />
       </el-col>
+
       <el-col :span="12">
-        <SetupForm @startTraining="handleTrainingStart"/>
+        <SetupForm
+          @startPerceptronTraining="handlePerceptronTrainingStart"
+          @startAdalineTraining="handleAdalineTrainingStart"
+        />
       </el-col>
     </el-row>
   </section>
@@ -25,7 +29,7 @@ import Plot from './Plot.vue';
   },
 })
 export default class Main {
-  async handleTrainingStart() {
+  async handlePerceptronTrainingStart() {
     const { learningRate, maxEpoch } = this.$store.state;
     const { pointAsArrays } = this.$store.getters;
 
@@ -39,11 +43,34 @@ export default class Main {
     });
 
     if (!isTrained) {
-      this.$message({
-        message: 'No se encontró separación lineal.',
-        type: 'warning',
-      });
+      this.notifyTrainingFailure();
     }
+  }
+
+  async handleAdalineTrainingStart() {
+    const { learningRate, maxEpoch, desiredError } = this.$store.state;
+    const { pointAsArrays } = this.$store.getters;
+
+    this.$store.dispatch('setAdaline', {
+      learningRate,
+      maxEpoch,
+      desiredError,
+    });
+
+    const isTrained = await this.$store.dispatch('trainAdaline', {
+      inputs: pointAsArrays,
+    });
+
+    if (!isTrained) {
+      this.notifyTrainingFailure();
+    }
+  }
+
+  notifyTrainingFailure() {
+    this.$message({
+      message: 'No se encontró separación lineal.',
+      type: 'warning',
+    });
   }
 }
 
