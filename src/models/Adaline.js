@@ -10,7 +10,7 @@ export default class Adaline extends Neurone {
     this.isTrained = false;
   }
 
-  async startTraining(inputs) {
+  async startTraining(inputs, progressCb) {
     let trainingResults = [];
     let epochError = 0;
 
@@ -25,6 +25,13 @@ export default class Adaline extends Neurone {
       epochError = trainingResults.reduce((acc, { error }) => (acc + (error ** 2)), 0);
 
       this.meanSquareError = epochError / inputs.length;
+
+      if (typeof progressCb === 'function') {
+        progressCb({
+          epoch,
+          mse: this.meanSquareError,
+        });
+      }
 
       if (this.stopCondition()) {
         this.isTrained = true;

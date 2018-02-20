@@ -21,7 +21,7 @@ export default {
   },
 
   setAdaline({ dispatch }, { learningRate, maxEpoch, desiredError }) {
-    NeuronService.setPerceptron(learningRate, maxEpoch, desiredError);
+    NeuronService.setAdaline(learningRate, maxEpoch, desiredError);
 
     dispatch('drawPerceptronLine');
   },
@@ -38,7 +38,10 @@ export default {
   },
 
   async trainAdaline({ commit, dispatch }, { inputs }) {
-    const result = await NeuronService.train(inputs);
+    const result = await NeuronService.train(inputs, ({ epoch, mse }) => {
+      console.log('MSE', mse);
+      console.log('EPOCH', epoch);
+    });
 
     commit(UPDATE_NEURON_STATUS, { status: NeuronService.status });
     commit(UPDATE_NEURON_EPOCH, { epoch: NeuronService.epoch });

@@ -34,8 +34,8 @@ class NeuronService {
     });
   }
 
-  train(inputs) {
-    return this.neurone.startTraining(inputs);
+  train(inputs, progressCb) {
+    return this.neurone.startTraining(inputs, progressCb);
   }
 
   classifyInput(input) {
