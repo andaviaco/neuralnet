@@ -3,8 +3,8 @@
     <el-form-item label="Learning Rate">
       <el-slider
         :value="learningRate"
-        :min="0.01"
-        :max="0.99"
+        :min="0.001"
+        :max="0.999"
         :step="0.01"
         @input="handleLearningRateUpdate"
         show-input
@@ -15,8 +15,8 @@
     <el-form-item label="Error deseado">
       <el-slider
         :value="desiredError"
-        :min="0.01"
-        :max="0.99"
+        :min="0.0001"
+        :max="0.9999"
         :step="0.01"
         @input="handleDesiredErrorUpdate"
         show-input
@@ -28,7 +28,6 @@
       <el-input-number
         :value="maxEpoch"
         :min="1"
-        :max="500"
         @input="handleMaxEpoch"
       ></el-input-number>
     </el-form-item>
@@ -43,7 +42,6 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 
-// import { DEFAULT_MAX_EPOCH, DEFAULT_LEARNING_RATE } from '../const';
 import {
   UPDATE_LEARNING_RATE,
   UPDATE_MAX_EPOCH,
