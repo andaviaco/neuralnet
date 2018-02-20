@@ -33,7 +33,8 @@
     </el-form-item>
 
     <el-form-item>
-      <el-button type="primary" @click="onSubmit">Entrenar</el-button>
+      <el-button type="primary" @click="onTrainPerceptron" plain>Train Perceptron</el-button>
+      <el-button type="success" @click="onTrainAdaline" plain>Train Adaline</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -78,8 +79,12 @@ export default class SetupForm extends Vue {
     this.$store.commit(UPDATE_DESIRED_ERROR, { error: value });
   }
 
-  onSubmit() {
-    this.$emit('startTraining');
+  onTrainPerceptron() {
+    this.$emit('startPerceptronTraining');
+  }
+
+  onTrainAdaline() {
+    this.$emit('startAdalineTraining');
   }
 }
 </script>
