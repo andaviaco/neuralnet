@@ -1,6 +1,7 @@
+import _ from 'lodash';
 
 export function randomNumberInRange(min, max) {
-  return Math.random() * ((max - min) + min);
+  return _.random(min, max, true);
 }
 
 export function randomArray(size, upper, lower) {
@@ -10,4 +11,8 @@ export function randomArray(size, upper, lower) {
 
 export function sigmoid(value) {
   return 1 / (1 + Math.exp(-1 * value));
+}
+
+export function range(start, end, step) {
+  return _.range(start, end, step);
 }

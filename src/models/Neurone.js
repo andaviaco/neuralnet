@@ -4,7 +4,7 @@ import {
   DEFAULT_MAX_EPOCH,
   neuronStates,
 } from '../const';
-import { randomArray } from '../lib';
+import { randomArray, range } from '../lib';
 
 
 const WEIGHT_SIZE = 3;
@@ -21,7 +21,7 @@ export default class Neurone {
   ) {
     this.learningRate = learningRate;
     this.maxEpoch = maxEpoch;
-    this.weights = randomArray(WEIGHT_SIZE, lowerBound, upperBound);
+    this.weights = randomArray(WEIGHT_SIZE, -1, 1);
     this.status = neuronStates.UNTRAINED;
     this.epoch = 0;
     this.upperBound = upperBound;
@@ -48,7 +48,7 @@ export default class Neurone {
     this.epoch = 0;
     this.status = neuronStates.TRAINING;
 
-    for (const epoch of nj.arange(1, this.maxEpoch + 1).tolist()) {
+    for (const epoch of range(1, this.maxEpoch + 1)) {
       this.epoch = epoch;
 
       trainingResults = inputs.map(this.train.bind(this));

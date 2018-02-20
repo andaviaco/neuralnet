@@ -1,13 +1,11 @@
-import nj from 'numjs';
-
 import Neurone from './Neurone';
-import { sigmoid } from '../lib';
+import { range, sigmoid } from '../lib';
 
 export default class Adaline extends Neurone {
   constructor(desiredError, ...args) {
     super(...args);
 
-    this.aggregateError = 1;
+    this.meanSquareError = 1;
     this.desiredError = desiredError;
     this.isTrained = false;
   }
@@ -20,13 +18,13 @@ export default class Adaline extends Neurone {
     this.epoch = 0;
     this.status = Neurone.states.TRAINING;
 
-    for (const epoch of nj.arange(1, this.maxEpoch + 1).tolist()) {
+    for (const epoch of range(1, this.maxEpoch + 1)) {
       this.epoch = epoch;
 
       trainingResults = inputs.map(this.train.bind(this));
       epochError = trainingResults.reduce((acc, { error }) => (acc + (error ** 2)), 0);
 
-      this.aggregateError = epochError / inputs.length;
+      this.meanSquareError = epochError / inputs.length;
 
       if (this.stopCondition()) {
         this.isTrained = true;
@@ -70,7 +68,7 @@ export default class Adaline extends Neurone {
   }
 
   stopCondition() {
-    return this.aggregateError <= this.desiredError;
+    return this.meanSquareError <= this.desiredError;
   }
 
   static calcError(expected, activationValue) {
