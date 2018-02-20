@@ -44,7 +44,7 @@ export const NEURON_STATUS_UNTRAINED = 'untrained';
 export const NEURON_STATUS_TRAINING = 'training';
 export const NEURON_STATUS_TRAINED = 'trained';
 
-export const perceptronStateMap = {
+export const neuronStateMap = {
   [neuronStates.UNTRAINED]: NEURON_STATUS_UNTRAINED,
   [neuronStates.TRAINING]: NEURON_STATUS_TRAINING,
   [neuronStates.TRAINED]: NEURON_STATUS_TRAINED,
@@ -83,6 +83,6 @@ export default {
   NEURON_STATUS_TRAINING,
   NEURON_STATUS_TRAINED,
   neuronStates,
-  perceptronStateMap,
+  neuronStateMap,
   statusColorMap,
 };
