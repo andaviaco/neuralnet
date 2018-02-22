@@ -59,12 +59,12 @@ import * as d3 from 'd3';
 
 import { euclideanDistance, round } from '../lib';
 
-// import {
-//   SVG_AREACHART_WIDTH,
-//   SVG_AREACHART_HEIGHT,
-//   SVG_CARTESIAN_PADDING,
-//
-// } from '../const';
+import {
+  SVG_ERRORCHART_WIDTH,
+  SVG_ERRORCHART_HEIGHT,
+  UPPER_ERROR_DOMAIN,
+  LOWER_ERROR_DOMAIN,
+} from '../const';
 
 
 @Component
@@ -79,10 +79,10 @@ export default class ErrorChart extends Vue {
 
   points = [];
 
-  svgWidth = 500;
-  svgHeight = 150;
+  svgWidth = SVG_ERRORCHART_WIDTH;
+  svgHeight = SVG_ERRORCHART_HEIGHT;
 
-  ceil = 1.0;
+  ceil = UPPER_ERROR_DOMAIN;
 
   margin = {
     left: 30,
@@ -145,11 +145,11 @@ export default class ErrorChart extends Vue {
 
   update() {
     this.scales.x.domain(d3.extent(this.data, d => d.x));
-    this.scales.y.domain([0, this.ceil]);
+    this.scales.y.domain([LOWER_ERROR_DOMAIN, this.ceil]);
 
     const xAxis = d3.axisBottom().scale(this.scales.x);
     const yAxis = d3.axisLeft().scale(this.scales.y);
-    const yFloor = this.scales.y(0);
+    const yFloor = this.scales.y(LOWER_ERROR_DOMAIN);
 
     this.points = this.data.map(d => ({
       x: this.scales.x(d.x),
