@@ -1,7 +1,6 @@
 import { Perceptron, Adaline } from '../models';
 
 import {
-  neuronStateMap,
   UPPER_SCALE_DOMAIN,
   LOWER_SCALE_DOMAIN,
 } from '../const';
@@ -13,7 +12,7 @@ class NeuronService {
   }
 
   get status() {
-    return neuronStateMap[this.neurone.status];
+    return this.neurone.formatedStatus;
   }
 
   get epoch() {
@@ -34,19 +33,18 @@ class NeuronService {
     });
   }
 
-  train(inputs, progressCb) {
-    return this.neurone.startTraining(inputs, progressCb);
+  train(inputs) {
+    return this.neurone.startTraining(inputs);
   }
 
   classifyInput(input) {
     return this.neurone.classifyInput(input);
   }
 
-  getLine() {
+  getLine(weights) {
     return {
-      point1: [UPPER_SCALE_DOMAIN, this.neurone.lineFn(UPPER_SCALE_DOMAIN)],
-      point2: [LOWER_SCALE_DOMAIN, this.neurone.lineFn(LOWER_SCALE_DOMAIN)],
-      type: this.status,
+      point1: [UPPER_SCALE_DOMAIN, this.neurone.lineFn(UPPER_SCALE_DOMAIN, weights)],
+      point2: [LOWER_SCALE_DOMAIN, this.neurone.lineFn(LOWER_SCALE_DOMAIN, weights)],
     };
   }
 }

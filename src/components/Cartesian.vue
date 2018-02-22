@@ -12,15 +12,6 @@
       :transform="yAxisTransform"
     />
 
-    <circle
-      v-for="(p, index) in points"
-      :key="index"
-      :cx="p.x"
-      :cy="p.y"
-      :fill="p.color"
-      r="5"
-    />
-
     <line
       v-for="(l, index) in lines"
       :key="index + l"
@@ -31,6 +22,15 @@
       :stroke="l.color"
       stroke-width="3"
       stroke-opacity="0.4"
+    />
+
+    <circle
+      v-for="(p, index) in points"
+      :key="index"
+      :cx="p.x"
+      :cy="p.y"
+      :fill="p.color"
+      r="5"
     />
   </svg>
 </template>

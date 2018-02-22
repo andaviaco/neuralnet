@@ -27,3 +27,11 @@ export function euclideanDistance([x1, y1], [x2, y2]) {
 export function round(x, precision = 0) {
   return _.round(x, precision);
 }
+
+export async function delay(time) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, time);
+  });
+}

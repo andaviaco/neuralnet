@@ -3,6 +3,7 @@ import {
   DEFAULT_LEARNING_RATE,
   DEFAULT_MAX_EPOCH,
   neuronStates,
+  neuronStateMap,
 } from '../const';
 import { randomArray, range } from '../lib';
 
@@ -31,6 +32,10 @@ export default class Neurone {
 
   static get states() {
     return neuronStates;
+  }
+
+  get formatedStatus() {
+    return neuronStateMap[this.status];
   }
 
   get w() {
@@ -83,8 +88,8 @@ export default class Neurone {
     return sum;
   }
 
-  lineFn(x) {
-    const [w0, w1, w2] = this.weights;
+  lineFn(x, weights = this.weights) {
+    const [w0, w1, w2] = weights;
 
     return ((-w1 * x) + w0) / w2;
   }

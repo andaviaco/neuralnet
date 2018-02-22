@@ -31,14 +31,6 @@ export const toolPointTypeMap = {
   [TOOL_POINT_TYPE_2]: POINT_TYPE_2,
 };
 
-export const LINE_TYPE_UNTRAINED = 'untrained';
-export const LINE_TYPE_TRAINED = 'trained';
-
-export const lineTypecolorMap = {
-  [LINE_TYPE_UNTRAINED]: '#909399', // gray
-  [LINE_TYPE_TRAINED]: 'red',
-};
-
 export const neuronStates = {
   UNTRAINED: 0,
   TRAINING: 1,
@@ -49,10 +41,20 @@ export const NEURON_STATUS_UNTRAINED = 'untrained';
 export const NEURON_STATUS_TRAINING = 'training';
 export const NEURON_STATUS_TRAINED = 'trained';
 
+export const LINE_TYPE_UNTRAINED = NEURON_STATUS_UNTRAINED;
+export const LINE_TYPE_TRAINING = NEURON_STATUS_TRAINING;
+export const LINE_TYPE_TRAINED = NEURON_STATUS_TRAINED;
+
 export const neuronStateMap = {
   [neuronStates.UNTRAINED]: NEURON_STATUS_UNTRAINED,
   [neuronStates.TRAINING]: NEURON_STATUS_TRAINING,
   [neuronStates.TRAINED]: NEURON_STATUS_TRAINED,
+};
+
+export const lineTypecolorMap = {
+  [LINE_TYPE_UNTRAINED]: '#909399', // gray
+  [LINE_TYPE_TRAINING]: 'rgba(245, 108, 108, 0.1)',
+  [LINE_TYPE_TRAINED]: 'red',
 };
 
 export const statusColorMap = {

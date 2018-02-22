@@ -10,7 +10,9 @@ export default class Adaline extends Neurone {
     this.isTrained = false;
   }
 
-  async startTraining(inputs, progressCb) {
+  async startTraining(inputs) {
+    const progressLog = [];
+
     let trainingResults = [];
     let epochError = 0;
 
@@ -26,17 +28,18 @@ export default class Adaline extends Neurone {
 
       this.meanSquareError = epochError / inputs.length;
 
-      if (typeof progressCb === 'function') {
-        progressCb({
-          epoch,
-          mse: this.meanSquareError,
-        });
-      }
-
       if (this.stopCondition()) {
         this.isTrained = true;
         break;
       }
+
+      // TODO: show last state as untrained
+      progressLog.push({
+        epoch: this.epoch,
+        error: this.meanSquareError,
+        weights: [...this.weights],
+        status: this.formatedStatus,
+      });
     }
 
     if (this.isTrained) {
@@ -46,7 +49,7 @@ export default class Adaline extends Neurone {
       this.status = Neurone.states.UNTRAINED;
     }
 
-    return this.isTrained;
+    return { isTrained: this.isTrained, progressLog };
   }
 
   train([input, expected]) {

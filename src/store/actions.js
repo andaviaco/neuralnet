@@ -1,4 +1,5 @@
 import { NeuronService } from '../services';
+import { delay } from '../lib';
 import {
   ADD_LINE,
   ADD_POINT,
@@ -9,10 +10,10 @@ import {
 
 
 export default {
-  drawPerceptronLine({ commit }) {
-    const line = NeuronService.getLine();
+  drawPerceptronLine({ commit }, { type, weights }) {
+    const line = NeuronService.getLine(weights);
 
-    commit(ADD_LINE, line);
+    commit(ADD_LINE, { ...line, type });
   },
 
   setPerceptron({ dispatch }, { learningRate, maxEpoch }) {
@@ -24,7 +25,7 @@ export default {
   setAdaline({ dispatch }, { learningRate, maxEpoch, desiredError }) {
     NeuronService.setAdaline(learningRate, maxEpoch, desiredError);
 
-    dispatch('drawPerceptronLine');
+    dispatch('drawPerceptronLine', { type: NeuronService.status });
   },
 
   async trainPerceptron({ commit, dispatch }, { inputs }) {
@@ -39,16 +40,28 @@ export default {
   },
 
   async trainAdaline({ commit, dispatch }, { inputs }) {
-    const result = await NeuronService.train(inputs, ({ epoch, mse }) => {
-      commit(ADD_ERROR_LOG, { error: mse, epoch });
-    });
+    const result = await NeuronService.train(inputs);
+
+    for (const log of result.progressLog) {
+      const {
+        error,
+        status,
+        epoch,
+        weights,
+      } = log;
+
+      dispatch('drawPerceptronLine', { type: status, weights });
+      commit(ADD_ERROR_LOG, { error, epoch });
+      commit(UPDATE_NEURON_EPOCH, { epoch });
+
+      // eslint-disable-next-line no-await-in-loop
+      await delay(100);
+    }
 
     commit(UPDATE_NEURON_STATUS, { status: NeuronService.status });
-    commit(UPDATE_NEURON_EPOCH, { epoch: NeuronService.epoch });
+    dispatch('drawPerceptronLine', { type: NeuronService.status });
 
-    dispatch('drawPerceptronLine');
-
-    return result;
+    return result.isTrained;
   },
 
   addUnclassifiedPoint({ commit }, { x, y }) {

@@ -44,6 +44,7 @@
       </circle>
 
       <text
+        v-if="hoverPoint.x !== null"
         class="selector-label"
         :x="hoverPoint.x"
         :y="hoverPoint.y - 10"
@@ -72,7 +73,6 @@ import {
   },
   watch: {
     data() {
-      console.log('CHANGE');
       this.drawChart();
       this.update();
     },
