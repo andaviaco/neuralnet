@@ -49,7 +49,6 @@
 
     <el-form-item>
       <el-button
-        plain
         type="primary"
         :loading="isLoading"
         @click="onTrainModel"

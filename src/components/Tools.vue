@@ -1,17 +1,19 @@
 <template lang="html">
   <el-button-group>
     <el-button
+      plain
       type="success"
-      size="medium"
+      size="mini"
       icon="el-icon-circle-plus"
-      :disabled="selected === tools.pointType2"
+      :class="{ active: selected === tools.pointType2 }"
       @click="handleToolSelect(tools.pointType2)"
     />
     <el-button
+      plain
       type="primary"
-      size="medium"
+      size="mini"
       icon="el-icon-remove-outline"
-      :disabled="selected === tools.pointType1"
+      :class="{ active: selected === tools.pointType1 }"
       @click="handleToolSelect(tools.pointType1)"
     />
   </el-button-group>
@@ -43,4 +45,16 @@ export default class Tools extends Vue {
 </script>
 
 <style lang="scss">
+.el-button--success.is-plain.active {
+  background: #5daf34;
+  border-color: #5daf34;
+  color: #fff;
+  outline: 0;
+}
+
+.el-button--primary.is-plain.active {
+  background: #409EFF;
+  border-color: #409EFF;
+  color: #fff;
+}
 </style>
