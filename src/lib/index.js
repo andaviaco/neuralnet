@@ -16,3 +16,14 @@ export function sigmoid(value) {
 export function range(start, end, step) {
   return _.range(start, end, step);
 }
+
+export function euclideanDistance([x1, y1], [x2, y2]) {
+  const dx = (x2 - x1) ** 2;
+  const dy = (y2 - y1) ** 2;
+
+  return Math.sqrt(dx + dy);
+}
+
+export function round(x, precision = 0) {
+  return _.round(x, precision);
+}

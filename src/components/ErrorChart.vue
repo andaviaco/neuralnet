@@ -1,5 +1,10 @@
 <template lang="html">
-  <svg class="area-chart" :width="svgWidth" :height="svgHeight">
+  <svg
+    class="area-chart"
+    :width="svgWidth"
+    :height="svgHeight"
+    @mousemove="handleMousemove"
+  >
     <g
       :style="{transform: `translate(${margin.left}px, ${margin.top}px)`}"
     >
@@ -28,6 +33,21 @@
           x="20"
         >Época</text>
       </g>
+
+      <circle
+        class="selector"
+        v-if="hoverPoint.x !== null"
+        :cx="hoverPoint.x"
+        :cy="hoverPoint.y"
+        r="5"
+      >
+      </circle>
+
+      <text
+        class="selector-label"
+        :x="hoverPoint.x"
+        :y="hoverPoint.y - 10"
+      >E: {{ scaledHover.y }}</text>
     </g>
   </svg>
 </template>
@@ -36,6 +56,8 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import * as d3 from 'd3';
+
+import { euclideanDistance, round } from '../lib';
 
 // import {
 //   SVG_AREACHART_WIDTH,
@@ -79,6 +101,13 @@ export default class ErrorChart extends Vue {
     y: null,
   }
 
+  hoverPoint = {
+    x: null,
+    y: null,
+  }
+
+  lastHoverPoint = {}
+
   createArea = d3.area().x(d => d.x).y0(d => d.max).y1(d => d.y)
 
   createLine = d3.line().x(d => d.x).y(d => d.y)
@@ -88,6 +117,18 @@ export default class ErrorChart extends Vue {
     const height = this.svgHeight - this.margin.top - this.margin.bottom;
 
     return { width, height };
+  }
+
+  get scaledHover() {
+    let x;
+    let y;
+
+    if (this.scales.x) {
+      x = round(this.scales.x.invert(this.hoverPoint.x), 3);
+      y = round(this.scales.y.invert(this.hoverPoint.y), 3);
+    }
+
+    return { x, y };
   }
 
   mounted() {
@@ -126,23 +167,60 @@ export default class ErrorChart extends Vue {
     d3.select(this.$refs.xAxis).call(xAxis);
     d3.select(this.$refs.yAxis).call(yAxis);
   }
+
+  handleMousemove({ offsetX, offsetY }) {
+    if (this.points.length > 0) {
+      const x = offsetX - this.margin.left;
+      const y = offsetY - this.margin.top;
+      const closestPoint = this.getClosestPoint(x, y);
+
+      if (this.lastHoverPoint.index !== closestPoint.index) {
+        this.hoverPoint.x = closestPoint.x;
+        this.hoverPoint.y = closestPoint.y;
+
+        this.lastHoverPoint = closestPoint;
+      }
+    }
+  }
+
+  getClosestPoint(x, y) {
+    return this.points
+      .map((point, index) => ({
+        x: point.x,
+        y: point.y,
+        distance: euclideanDistance([x, y], [point.x, point.y]),
+        index,
+      }))
+      .reduce((min, next) => (min.distance < next.distance ? min : next));
+  }
 }
 </script>
 
 <style lang="scss">
+$highlight: #f56c6c;
+$highlight-fill: rgba(245, 108, 108, .2);
+
 .area {
-  fill: rgba(245, 108, 108, .2);
+  fill: $highlight-fill;
 }
 
 .axis {
   .label {
-    fill: #000;
+    fill: black;
   }
 }
 
 .line {
-  stroke: #f56c6c;
+  stroke: $highlight;
   stroke-width: 1px;
   fill: none;
+}
+
+.selector {
+  fill: $highlight;
+}
+
+.selector-label {
+  text-anchor: middle;
 }
 </style>
