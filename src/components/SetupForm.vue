@@ -1,15 +1,18 @@
 <template lang="html">
   <el-form label-position="top">
     <el-form-item label="Modelo">
-      <el-switch
-        v-model="selectedModel"
-        active-color="#13ce66"
-        inactive-color="#ff4949"
-        active-text="Adaline"
-        inactive-text="Perceptron"
-        active-value="adaline"
-        inactive-value="perceptron"
-      />
+      <el-form-item>
+        <el-radio
+          border
+          label="perceptron"
+          v-model="selectedModel"
+        >Perceptrón</el-radio>
+        <el-radio
+          border
+          label="adaline"
+          v-model="selectedModel"
+        >Adaline</el-radio>
+      </el-form-item>
     </el-form-item>
 
     <el-form-item label="Learning Rate">
@@ -29,7 +32,7 @@
         :value="desiredError"
         :min="0.0001"
         :max="0.9999"
-        :step="0.01"
+        :step="0.001"
         @input="handleDesiredErrorUpdate"
         show-input
       >
@@ -45,7 +48,12 @@
     </el-form-item>
 
     <el-form-item>
-      <el-button type="primary" @click="onTrainModel" plain>Entrenar</el-button>
+      <el-button
+        plain
+        type="primary"
+        :loading="isLoading"
+        @click="onTrainModel"
+      >Entrenar</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -75,6 +83,10 @@ export default class SetupForm extends Vue {
 
   get desiredError() {
     return this.$store.state.desiredError;
+  }
+
+  get isLoading() {
+    return this.$store.state.loading;
   }
 
   handleLearningRateUpdate(value) {
