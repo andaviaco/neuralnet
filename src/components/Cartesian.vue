@@ -1,15 +1,15 @@
 <template lang="html">
   <svg class="cartesian" :width="svgWidth" :height="svgHeight" @click="clickCoord">
     <g
-      :id="xAxisId"
+      ref="xAxis"
       class="axis axis--x"
-      :transform="xAxisTransform"
+      :style="{transform: `translate(0, ${svgHeight / 2}px)`}"
     />
 
     <g
-      :id="yAxisId"
+      ref="yAxis"
       class="axis axis--y"
-      :transform="yAxisTransform"
+      :style="{transform: `translate(${svgWidth / 2}px, 0)`}"
     />
 
     <line
@@ -68,8 +68,6 @@ export default class Cartesian extends Vue {
   yAxisTransform = '';
   xScale = null;
   yScale = null;
-  xAxisId = 'xAxis';
-  yAxisId = 'yAxis';
 
   mounted() {
     this.drawPlain();
@@ -149,15 +147,12 @@ export default class Cartesian extends Vue {
     this.xScale = xScale;
     this.yScale = yScale;
 
-    this.xAxisTransform = `translate(0, ${this.svgHeight / 2})`;
-    this.yAxisTransform = `translate(${this.svgWidth / 2}, 0)`;
-
     this.drawAxisGrid(xAxis, yAxis);
   }
 
   drawAxisGrid(xAxis, yAxis) {
-    const xAxisPlot = d3.select(`#${this.xAxisId}`).call(xAxis);
-    const yAxisPlot = d3.select(`#${this.yAxisId}`).call(yAxis);
+    const xAxisPlot = d3.select(this.$refs.xAxis).call(xAxis);
+    const yAxisPlot = d3.select(this.$refs.yAxis).call(yAxis);
 
     const lineSize = (this.svgWidth - (2 * this.svgPadding)) / 2;
     const lineTop = lineSize;

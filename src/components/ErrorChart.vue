@@ -5,9 +5,7 @@
     :height="svgHeight"
     @mousemove="handleMousemove"
   >
-    <g
-      :style="{transform: `translate(${margin.left}px, ${margin.top}px)`}"
-    >
+    <g :style="{transform: `translate(${margin.left}px, ${margin.top}px)`}">
       <path class="area" :d="paths.area" />
       <path class="line" :d="paths.line" />
 
