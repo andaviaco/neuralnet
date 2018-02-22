@@ -1,5 +1,17 @@
 <template lang="html">
   <el-form label-position="top">
+    <el-form-item label="Modelo">
+      <el-switch
+        v-model="selectedModel"
+        active-color="#13ce66"
+        inactive-color="#ff4949"
+        active-text="Adaline"
+        inactive-text="Perceptron"
+        active-value="adaline"
+        inactive-value="perceptron"
+      />
+    </el-form-item>
+
     <el-form-item label="Learning Rate">
       <el-slider
         :value="learningRate"
@@ -12,7 +24,7 @@
       </el-slider>
     </el-form-item>
 
-    <el-form-item label="Error deseado">
+    <el-form-item label="Error deseado" v-if="selectedModel === 'adaline'">
       <el-slider
         :value="desiredError"
         :min="0.0001"
@@ -33,8 +45,7 @@
     </el-form-item>
 
     <el-form-item>
-      <el-button type="primary" @click="onTrainPerceptron" plain>Train Perceptron</el-button>
-      <el-button type="success" @click="onTrainAdaline" plain>Train Adaline</el-button>
+      <el-button type="primary" @click="onTrainModel" plain>Entrenar</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -52,6 +63,8 @@ import {
 
 @Component
 export default class SetupForm extends Vue {
+  selectedModel = 'adaline';
+
   get learningRate() {
     return this.$store.state.learningRate;
   }
@@ -79,12 +92,12 @@ export default class SetupForm extends Vue {
     this.$store.commit(UPDATE_DESIRED_ERROR, { error: value });
   }
 
-  onTrainPerceptron() {
-    this.$emit('startPerceptronTraining');
-  }
-
-  onTrainAdaline() {
-    this.$emit('startAdalineTraining');
+  onTrainModel() {
+    if (this.selectedModel === 'adaline') {
+      this.$emit('startAdalineTraining');
+    } else {
+      this.$emit('startPerceptronTraining');
+    }
   }
 }
 </script>
