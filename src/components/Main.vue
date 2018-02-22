@@ -22,6 +22,11 @@ import Component from 'vue-class-component';
 import SetupForm from './SetupForm.vue';
 import Plot from './Plot.vue';
 
+import {
+  ACTIVATE_LOADING,
+  DEACTIVATE_LOADING,
+} from '../store';
+
 @Component({
   components: {
     SetupForm,
@@ -51,6 +56,8 @@ export default class Main {
     const { learningRate, maxEpoch, desiredError } = this.$store.state;
     const { pointAsArrays } = this.$store.getters;
 
+    this.$store.commit(ACTIVATE_LOADING);
+
     this.$store.dispatch('setAdaline', {
       learningRate,
       maxEpoch,
@@ -60,6 +67,8 @@ export default class Main {
     const isTrained = await this.$store.dispatch('trainAdaline', {
       inputs: pointAsArrays,
     });
+
+    this.$store.commit(DEACTIVATE_LOADING);
 
     if (!isTrained) {
       this.notifyTrainingFailure();

@@ -24,6 +24,7 @@ export default new Vuex.Store({
     neuronEpoch: 0,
     desiredError: DEFAULT_DESIRED_ERROR,
     errorLog: [],
+    loading: false,
   },
   getters: {
     pointAsArrays(state) {
@@ -60,6 +61,12 @@ export default new Vuex.Store({
     },
     [types.UPDATE_DESIRED_ERROR](state, { error }) {
       state.desiredError = error;
+    },
+    [types.ACTIVATE_LOADING](state) {
+      state.loading = true;
+    },
+    [types.DEACTIVATE_LOADING](state) {
+      state.loading = false;
     },
   },
 

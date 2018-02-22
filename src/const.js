@@ -1,7 +1,7 @@
 
 export const DEFAULT_MAX_EPOCH = 100;
-export const DEFAULT_LEARNING_RATE = 0.1;
-export const DEFAULT_DESIRED_ERROR = 0.01;
+export const DEFAULT_LEARNING_RATE = 0.3;
+export const DEFAULT_DESIRED_ERROR = 0.02;
 
 export const SVG_CARTESIAN_WIDTH = 350;
 export const SVG_CARTESIAN_HEIGHT = 350;
