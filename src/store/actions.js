@@ -2,6 +2,7 @@ import { NeuronService } from '../services';
 import {
   ADD_LINE,
   ADD_POINT,
+  ADD_ERROR_LOG,
   UPDATE_NEURON_STATUS,
   UPDATE_NEURON_EPOCH,
 } from './mutation-types';
@@ -39,8 +40,7 @@ export default {
 
   async trainAdaline({ commit, dispatch }, { inputs }) {
     const result = await NeuronService.train(inputs, ({ epoch, mse }) => {
-      console.log('MSE', mse);
-      console.log('EPOCH', epoch);
+      commit(ADD_ERROR_LOG, { error: mse, epoch });
     });
 
     commit(UPDATE_NEURON_STATUS, { status: NeuronService.status });

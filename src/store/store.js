@@ -23,6 +23,7 @@ export default new Vuex.Store({
     neuronStatus: NEURON_STATUS_UNTRAINED,
     neuronEpoch: 0,
     desiredError: DEFAULT_DESIRED_ERROR,
+    errorLog: [],
   },
   getters: {
     pointAsArrays(state) {
@@ -47,6 +48,9 @@ export default new Vuex.Store({
     },
     [types.ADD_LINE](state, { point1, point2, type }) {
       state.lines = [...state.lines, { point1, point2, type }];
+    },
+    [types.ADD_ERROR_LOG](state, { error, epoch }) {
+      state.errorLog = [...state.errorLog, { error, epoch }];
     },
     [types.UPDATE_NEURON_STATUS](state, { status }) {
       state.neuronStatus = status;

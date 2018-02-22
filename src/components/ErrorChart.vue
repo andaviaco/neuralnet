@@ -47,7 +47,7 @@
         class="selector-label"
         :x="hoverPoint.x"
         :y="hoverPoint.y - 10"
-      >E: {{ scaledHover.y }}</text>
+      >E: {{ scaledHover.y }} [{{ scaledHover.x }}]</text>
     </g>
   </svg>
 </template>
@@ -62,32 +62,32 @@ import { euclideanDistance, round } from '../lib';
 import {
   SVG_ERRORCHART_WIDTH,
   SVG_ERRORCHART_HEIGHT,
-  UPPER_ERROR_DOMAIN,
   LOWER_ERROR_DOMAIN,
 } from '../const';
 
 
-@Component
+@Component({
+  props: {
+    data: Array,
+  },
+  watch: {
+    data() {
+      console.log('CHANGE');
+      this.drawChart();
+      this.update();
+    },
+  },
+})
 export default class ErrorChart extends Vue {
-  data = [
-    { x: 1, y: 0.7 },
-    { x: 2, y: 0.6 },
-    { x: 3, y: 0.5 },
-    { x: 4, y: 0.7 },
-    { x: 5, y: 0.3 },
-  ];
-
   points = [];
 
   svgWidth = SVG_ERRORCHART_WIDTH;
   svgHeight = SVG_ERRORCHART_HEIGHT;
 
-  ceil = UPPER_ERROR_DOMAIN;
-
   margin = {
     left: 30,
-    right: 10,
-    top: 10,
+    right: 45,
+    top: 20,
     bottom: 20,
   }
 
@@ -145,7 +145,7 @@ export default class ErrorChart extends Vue {
 
   update() {
     this.scales.x.domain(d3.extent(this.data, d => d.x));
-    this.scales.y.domain([LOWER_ERROR_DOMAIN, this.ceil]);
+    this.scales.y.domain([LOWER_ERROR_DOMAIN, d3.max(this.data, d => d.y)]);
 
     const xAxis = d3.axisBottom().scale(this.scales.x);
     const yAxis = d3.axisLeft().scale(this.scales.y);

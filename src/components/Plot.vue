@@ -20,7 +20,7 @@
       <el-col :span="24">
         <section class="chart-container">
           <h3>Mean Square Error</h3>
-          <ErrorChart />
+          <ErrorChart :data="errorPoints"/>
         </section>
       </el-col>
     </el-row>
@@ -48,6 +48,12 @@ import { UPDATE_SELECTED_TOOL } from '../store/index';
 export default class Plot {
   handleToolSelect(selectedTool) {
     this.$store.commit(UPDATE_SELECTED_TOOL, { tool: selectedTool });
+  }
+
+  get errorPoints() {
+    const { errorLog } = this.$store.state;
+
+    return errorLog.map(e => ({ x: e.epoch, y: e.error }));
   }
 }
 </script>
