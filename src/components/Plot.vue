@@ -17,6 +17,10 @@
         <Status />
       </el-col>
     </el-row>
+
+    <el-row>
+      <ErrorChart />
+    </el-row>
   </section>
 </template>
 
@@ -24,6 +28,7 @@
 import Component from 'vue-class-component';
 
 import Cartesian from './Cartesian.vue';
+import ErrorChart from './ErrorChart.vue';
 import Tools from './Tools.vue';
 import Status from './Status.vue';
 
@@ -34,6 +39,7 @@ import { UPDATE_SELECTED_TOOL } from '../store/index';
     Cartesian,
     Tools,
     Status,
+    ErrorChart,
   },
 })
 export default class Plot {
