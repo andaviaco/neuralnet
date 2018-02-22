@@ -10,7 +10,7 @@ import {
 
 
 export default {
-  drawPerceptronLine({ commit }, { type, weights }) {
+  drawNeuronLine({ commit }, { type, weights }) {
     const line = NeuronService.getLine(weights);
 
     commit(ADD_LINE, { ...line, type });
@@ -19,13 +19,13 @@ export default {
   setPerceptron({ dispatch }, { learningRate, maxEpoch }) {
     NeuronService.setPerceptron(learningRate, maxEpoch);
 
-    dispatch('drawPerceptronLine');
+    dispatch('drawNeuronLine', { type: NeuronService.status });
   },
 
   setAdaline({ dispatch }, { learningRate, maxEpoch, desiredError }) {
     NeuronService.setAdaline(learningRate, maxEpoch, desiredError);
 
-    dispatch('drawPerceptronLine', { type: NeuronService.status });
+    dispatch('drawNeuronLine', { type: NeuronService.status });
   },
 
   async trainPerceptron({ commit, dispatch }, { inputs }) {
@@ -34,7 +34,7 @@ export default {
     commit(UPDATE_NEURON_STATUS, { status: NeuronService.status });
     commit(UPDATE_NEURON_EPOCH, { epoch: NeuronService.epoch });
 
-    dispatch('drawPerceptronLine');
+    dispatch('drawNeuronLine', { type: NeuronService.status });
 
     return result;
   },
@@ -50,7 +50,7 @@ export default {
         weights,
       } = log;
 
-      dispatch('drawPerceptronLine', { type: status, weights });
+      dispatch('drawNeuronLine', { type: status, weights });
       commit(ADD_ERROR_LOG, { error, epoch });
       commit(UPDATE_NEURON_EPOCH, { epoch });
 
@@ -59,7 +59,7 @@ export default {
     }
 
     commit(UPDATE_NEURON_STATUS, { status: NeuronService.status });
-    dispatch('drawPerceptronLine', { type: NeuronService.status });
+    dispatch('drawNeuronLine', { type: NeuronService.status });
 
     return result.isTrained;
   },
