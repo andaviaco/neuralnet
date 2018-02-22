@@ -6,10 +6,8 @@
       </el-col>
     </el-row>
 
-    <el-row>
-      <el-col :span="24">
-        <Cartesian />
-      </el-col>
+    <el-row justify="center" type="flex">
+      <Cartesian />
     </el-row>
 
     <el-row>
@@ -19,7 +17,12 @@
     </el-row>
 
     <el-row>
-      <ErrorChart />
+      <el-col :span="24">
+        <section class="chart-container">
+          <h3>Mean Square Error</h3>
+          <ErrorChart />
+        </section>
+      </el-col>
     </el-row>
   </section>
 </template>
@@ -50,4 +53,11 @@ export default class Plot {
 </script>
 
 <style lang="scss">
+.chart-container {
+  margin-top: 1em;
+
+  h3 {
+    margin-bottom: 0;
+  }
+}
 </style>
