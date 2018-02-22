@@ -11,8 +11,6 @@ export default class Adaline extends Neurone {
   }
 
   async startTraining(inputs) {
-    const progressLog = [];
-
     let trainingResults = [];
     let epochError = 0;
 
@@ -33,13 +31,7 @@ export default class Adaline extends Neurone {
         break;
       }
 
-      // TODO: show last state as untrained
-      progressLog.push({
-        epoch: this.epoch,
-        error: this.meanSquareError,
-        weights: [...this.weights],
-        status: this.formatedStatus,
-      });
+      this.logProgress({ epoch: this.epoch, error: this.meanSquareError });
     }
 
     if (this.isTrained) {
@@ -49,7 +41,7 @@ export default class Adaline extends Neurone {
       this.status = Neurone.states.UNTRAINED;
     }
 
-    return { isTrained: this.isTrained, progressLog };
+    return { isTrained: this.isTrained, progressLog: this.progressLog };
   }
 
   train([input, expected]) {

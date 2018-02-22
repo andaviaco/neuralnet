@@ -28,10 +28,12 @@ export default class Neurone {
     this.upperBound = upperBound;
     this.lowerBound = lowerBound;
     this.isTrained = false;
+    this.progressLog = [];
   }
 
-  static get states() {
-    return neuronStates;
+
+  set w(weights) {
+    this.weights = weights.tolist();
   }
 
   get formatedStatus() {
@@ -42,8 +44,21 @@ export default class Neurone {
     return nj.array(this.weights);
   }
 
-  set w(weights) {
-    this.weights = weights.tolist();
+
+  static get states() {
+    return neuronStates;
+  }
+
+  static outputFn(activationValue) {
+    if (activationValue >= 0) {
+      return 1;
+    }
+
+    return 0;
+  }
+
+  static formatInput(input) {
+    return nj.array([THRESHOLD_INPUT, ...input]);
   }
 
   async startTraining(inputs) {
@@ -98,15 +113,12 @@ export default class Neurone {
     return this.isTrained;
   }
 
-  static outputFn(activationValue) {
-    if (activationValue >= 0) {
-      return 1;
-    }
-
-    return 0;
-  }
-
-  static formatInput(input) {
-    return nj.array([THRESHOLD_INPUT, ...input]);
+  logProgress({ epoch, error }) {
+    this.progressLog.push({
+      epoch,
+      error,
+      weights: [...this.weights],
+      status: this.formatedStatus,
+    });
   }
 }
