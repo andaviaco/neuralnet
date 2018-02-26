@@ -1,7 +1,7 @@
 
-export const DEFAULT_MAX_EPOCH = 100;
+export const DEFAULT_MAX_EPOCH = 1000;
 export const DEFAULT_LEARNING_RATE = 0.3;
-export const DEFAULT_DESIRED_ERROR = 0.02;
+export const DEFAULT_DESIRED_ERROR = 0.01;
 
 export const SVG_CARTESIAN_WIDTH = 350;
 export const SVG_CARTESIAN_HEIGHT = 350;
@@ -53,7 +53,7 @@ export const neuronStateMap = {
 
 export const lineTypecolorMap = {
   [LINE_TYPE_UNTRAINED]: '#909399', // gray
-  [LINE_TYPE_TRAINING]: 'rgba(245, 108, 108, 0.1)',
+  [LINE_TYPE_TRAINING]: 'rgba(184, 53, 214, 0.1)',
   [LINE_TYPE_TRAINED]: 'red',
 };
 
