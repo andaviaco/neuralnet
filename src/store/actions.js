@@ -55,7 +55,7 @@ export default {
       commit(UPDATE_NEURON_EPOCH, { epoch });
 
       // eslint-disable-next-line no-await-in-loop
-      await delay(100);
+      await delay(50);
     }
 
     commit(UPDATE_NEURON_STATUS, { status: NeuronService.status });
