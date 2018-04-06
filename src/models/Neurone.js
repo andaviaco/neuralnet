@@ -22,11 +22,9 @@ export default class Neurone {
   ) {
     this.learningRate = learningRate;
     this.maxEpoch = maxEpoch;
-    this.weights = randomArray(WEIGHT_SIZE, -1, 1);
+    this.weights = randomArray(WEIGHT_SIZE, lowerBound, upperBound);
     this.status = neuronStates.UNTRAINED;
     this.epoch = 0;
-    this.upperBound = upperBound;
-    this.lowerBound = lowerBound;
     this.isTrained = false;
     this.progressLog = [];
   }

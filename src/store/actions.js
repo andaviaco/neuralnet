@@ -7,6 +7,7 @@ import {
   UPDATE_NEURON_STATUS,
   UPDATE_NEURON_EPOCH,
 } from './mutation-types';
+import { DRAWING_SPEED } from '../const';
 
 
 export default {
@@ -55,7 +56,7 @@ export default {
       commit(UPDATE_NEURON_EPOCH, { epoch });
 
       // eslint-disable-next-line no-await-in-loop
-      await delay(50);
+      await delay(DRAWING_SPEED);
     }
 
     commit(UPDATE_NEURON_STATUS, { status: NeuronService.status });

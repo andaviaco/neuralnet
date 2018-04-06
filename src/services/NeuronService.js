@@ -1,8 +1,9 @@
 import { Perceptron, Adaline } from '../models';
-
 import {
   UPPER_SCALE_DOMAIN,
   LOWER_SCALE_DOMAIN,
+  ADALINE_WEIGHTS_INITIAL_LOWER_BOUND,
+  ADALINE_WEIGHTS_INITIAL_UPPER_BOUND,
 } from '../const';
 
 
@@ -28,8 +29,8 @@ class NeuronService {
 
   setAdaline(learningRate, maxEpoch, desiredError) {
     this.neurone = new Adaline(desiredError, learningRate, maxEpoch, {
-      upperBound: -1,
-      lowerBound: 1,
+      upperBound: ADALINE_WEIGHTS_INITIAL_LOWER_BOUND,
+      lowerBound: ADALINE_WEIGHTS_INITIAL_UPPER_BOUND,
     });
   }
 
