@@ -96,7 +96,7 @@ export default class Neurone {
 
   activation(input) {
     const x = Neurone.formatInput(input);
-    const sum = nj.dot(this.w.T, x).sum();
+    const sum = nj.dot(this.w, x).tolist()[0];
 
     return sum;
   }
