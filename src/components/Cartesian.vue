@@ -1,17 +1,5 @@
 <template lang="html">
   <svg class="cartesian" :width="svgWidth" :height="svgHeight" @click="clickCoord">
-    <g
-      ref="xAxis"
-      class="axis axis--x"
-      :style="{transform: `translate(0, ${svgHeight / 2}px)`}"
-    />
-
-    <g
-      ref="yAxis"
-      class="axis axis--y"
-      :style="{transform: `translate(${svgWidth / 2}px, 0)`}"
-    />
-
     <line
       v-for="(l, index) in lines"
       :key="index + l"
@@ -22,6 +10,18 @@
       :stroke="l.color"
       stroke-width="3"
       stroke-opacity="0.4"
+    />
+
+    <g
+      ref="xAxis"
+      class="axis axis--x"
+      :style="{transform: `translate(0, ${svgHeight / 2}px)`}"
+    />
+
+    <g
+      ref="yAxis"
+      class="axis axis--y"
+      :style="{transform: `translate(${svgWidth / 2}px, 0)`}"
     />
 
     <circle
