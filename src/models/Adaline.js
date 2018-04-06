@@ -36,6 +36,7 @@ export default class Adaline extends Neurone {
 
     if (this.isTrained) {
       this.status = Neurone.states.TRAINED;
+      this.logProgress({ epoch: this.epoch, error: this.meanSquareError });
       console.log('Trained W', this.weights);
     } else {
       this.status = Neurone.states.UNTRAINED;
