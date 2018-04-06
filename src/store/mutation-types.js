@@ -10,6 +10,7 @@ export const UPDATE_NEURON_EPOCH = 'updateNeuronEpoch';
 export const UPDATE_DESIRED_ERROR = 'updateDesiredError';
 export const ACTIVATE_LOADING = 'activateLoading';
 export const DEACTIVATE_LOADING = 'deactivateLoading';
+export const CLEAR_TRAINING = 'clearTraining';
 
 export default {
   UPDATE_SELECTED_TOOL,
@@ -23,4 +24,5 @@ export default {
   UPDATE_DESIRED_ERROR,
   ACTIVATE_LOADING,
   DEACTIVATE_LOADING,
+  CLEAR_TRAINING,
 };

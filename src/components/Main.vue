@@ -25,6 +25,7 @@ import Plot from './Plot.vue';
 import {
   ACTIVATE_LOADING,
   DEACTIVATE_LOADING,
+  CLEAR_TRAINING,
 } from '../store';
 
 @Component({
@@ -37,6 +38,8 @@ export default class Main {
   async handlePerceptronTrainingStart() {
     const { learningRate, maxEpoch } = this.$store.state;
     const { pointAsArrays } = this.$store.getters;
+
+    this.$store.commit(CLEAR_TRAINING);
 
     this.$store.dispatch('setPerceptron', {
       learningRate,
@@ -57,6 +60,7 @@ export default class Main {
     const { pointAsArrays } = this.$store.getters;
 
     this.$store.commit(ACTIVATE_LOADING);
+    this.$store.commit(CLEAR_TRAINING);
 
     this.$store.dispatch('setAdaline', {
       learningRate,

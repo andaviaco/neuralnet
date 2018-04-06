@@ -68,6 +68,9 @@ export default new Vuex.Store({
     [types.DEACTIVATE_LOADING](state) {
       state.loading = false;
     },
+    [types.CLEAR_TRAINING](state) {
+      state.lines = [];
+    },
   },
 
   actions,
