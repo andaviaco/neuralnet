@@ -122,8 +122,8 @@ export default class ErrorChart extends Vue {
     let y;
 
     if (this.scales.x) {
-      x = round(this.scales.x.invert(this.hoverPoint.x), 3);
-      y = round(this.scales.y.invert(this.hoverPoint.y), 3);
+      x = round(this.scales.x.invert(this.hoverPoint.x), 4);
+      y = round(this.scales.y.invert(this.hoverPoint.y), 4);
     }
 
     return { x, y };
