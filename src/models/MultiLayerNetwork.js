@@ -1,6 +1,6 @@
 import nj from 'numjs';
 
-import { randomArray, range, sigmoid } from '../lib';
+import { randomArray, range, sigmoid, dsigmoid } from '../lib';
 
 
 const THRESHOLD_INPUT = -1;
@@ -13,12 +13,24 @@ class Neurone {
     this.weights = randomArray(size + 1, 0, 1);
   }
 
+  static formatInput(input) {
+    return nj.array([THRESHOLD_INPUT, ...input]);
+  }
+
+  static outputStep(value) {
+    if (value >= 0) {
+      return 1;
+    }
+
+    return 0;
+  }
+
   get w() {
     return nj.array(this.weights);
   }
 
-  static formatInput(input) {
-    return nj.array([THRESHOLD_INPUT, ...input]);
+  set w(value) {
+    this.weights = value.tolist();
   }
 
   process(input) {
@@ -39,6 +51,11 @@ class Neurone {
   transference(value) {
     return sigmoid(value);
   }
+
+  updateWeights(delta) {
+    const d = nj.array(delta.tolist()[0]);
+    this.w = this.w.add(d);
+  }
 }
 
 class Layer {
@@ -52,12 +69,24 @@ class Layer {
       .map(() => new Neurone(numInputs));
   }
 
-  get weights() {
-    return [];
+  get arrayOutput() {
+    return nj.array(this.output);
   }
 
-  get sesibility() {
-    return [];
+  get arrayInput() {
+    return Neurone.formatInput(this.input);
+  }
+
+  get weights() {
+    return this.neurones.map(n => n.weights.slice(1));
+  }
+
+  get nets() {
+    return this.neurones.map(n => n.activation(this.input));
+  }
+
+  get classifiedOutput() {
+    return this.nets.map(Neurone.outputStep);
   }
 
   feedForward(input) {
@@ -65,12 +94,26 @@ class Layer {
     this.output = this.neurones.map(n => n.process(input));
   }
 
-  updateWeights() {
-
+  updateWeights(learningRate) {
+    const rowInput = this.arrayInput.reshape(1, this.arrayInput.size);
+    const deltaWeight = this.sensibility.dot(rowInput).multiply(learningRate);
+    this.neurones.map((n, i) => n.updateWeights(deltaWeight.slice([i, i + 1])));
   }
 
-  updateSensibility() {
+  updateSensibility(nextWeights, nextSensibility) {
+    const s = nj.array(nextSensibility);
+    const w = nj.array(nextWeights);
+    const derivative = nj.array(this.nets.map(dsigmoid));
+    const diagDerivate = nj.diag(derivative);
 
+    this.sensibility = diagDerivate.dot(w.T.dot(s));
+  }
+
+  outputSensibility(error) {
+    const derivative = nj.array(this.nets.map(dsigmoid));
+    const sensibility = derivative.multiply(error);
+
+    this.sensibility = sensibility.reshape(sensibility.size, 1);
   }
 }
 
@@ -81,9 +124,12 @@ class MultiLayerNetwork {
   isTrained = false;
 
   constructor(numInputs, numClasses, numHiddenLayers, numNeurones) {
-    this.hiddenLayers = Array(numHiddenLayers)
+    const inputLayer = new Layer(numInputs, numNeurones);
+    const hiddenLayers = Array(numHiddenLayers - 1)
       .fill()
-      .map(() => new Layer(numInputs, numNeurones));
+      .map(() => new Layer(numNeurones, numNeurones));
+
+    this.hiddenLayers = [inputLayer, ...hiddenLayers];
 
     /*
      * the number of inputs in the output layer is the same as the number
@@ -97,6 +143,7 @@ class MultiLayerNetwork {
     let trainingResults = [];
 
     this.desiredError = desiredError;
+    this.learningRate = learningRate;
 
     for (const epoch of range(1, maxEpoch + 1)) {
       console.log('EPOCH', epoch);
@@ -117,32 +164,48 @@ class MultiLayerNetwork {
   trainingCycle([input, expected]) {
     let error = 0;
     let squareError = 0;
+
     this.forwardPropagate(input);
 
     error = this.calculateError(expected);
     squareError = nj.array(error).pow(2).sum();
-    console.log('squareError', squareError);
+
     this.backwardPropagate(error);
 
     return { error: squareError };
   }
 
   forwardPropagate(input) {
-    const allLayers = this.hiddenLayers.concat([this.outputLayer]);
-    let prevLayer = allLayers[0];
+    const allLayers = [...this.hiddenLayers, this.outputLayer];
+    let prevLayer = this.hiddenLayers[0];
 
-    prevLayer.output = input;
+    prevLayer.feedForward(input);
 
-    for (const layer of allLayers.slice(1)) {
+    allLayers.slice(1).forEach((l) => {
       const nextInput = prevLayer.output;
-
-      layer.feedForward(nextInput);
-      prevLayer = layer;
-    }
+      l.feedForward(nextInput);
+      prevLayer = l;
+    });
   }
 
   backwardPropagate(error) {
+    const allLayers = [...this.hiddenLayers, this.outputLayer];
+    let prevLayer = this.outputLayer;
 
+    this.outputLayer.outputSensibility(error);
+
+    [...this.hiddenLayers].reverse().forEach((l) => {
+      l.updateSensibility(prevLayer.weights, prevLayer.sensibility);
+      prevLayer = l;
+    });
+
+    allLayers.forEach(l => l.updateWeights(this.learningRate));
+  }
+
+  classify(input) {
+    this.forwardPropagate(input);
+
+    return this.outputLayer.classifiedOutput;
   }
 
   calculateError(expected) {

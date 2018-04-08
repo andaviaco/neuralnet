@@ -13,6 +13,10 @@ export function sigmoid(value) {
   return 1 / (1 + Math.exp(-1 * value));
 }
 
+export function dsigmoid(value) {
+  return sigmoid(value) * (1 - sigmoid(value));
+}
+
 export function range(start, end, step) {
   return _.range(start, end, step);
 }
