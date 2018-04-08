@@ -1,121 +1,7 @@
 import nj from 'numjs';
 
-import { randomArray, range, sigmoid, dsigmoid } from '../lib';
-
-
-const THRESHOLD_INPUT = -1;
-
-class Neurone {
-  weights = [];
-  output = [];
-
-  constructor(size) {
-    this.weights = randomArray(size + 1, 0, 1);
-  }
-
-  static formatInput(input) {
-    return nj.array([THRESHOLD_INPUT, ...input]);
-  }
-
-  static outputStep(value) {
-    if (value >= 0) {
-      return 1;
-    }
-
-    return 0;
-  }
-
-  get w() {
-    return nj.array(this.weights);
-  }
-
-  set w(value) {
-    this.weights = value.tolist();
-  }
-
-  process(input) {
-    const activationValue = this.activation(input);
-
-    this.output = this.transference(activationValue);
-
-    return this.output;
-  }
-
-  activation(input) {
-    const x = Neurone.formatInput(input);
-    const sum = nj.dot(this.w, x).tolist()[0];
-
-    return sum;
-  }
-
-  transference(value) {
-    return sigmoid(value);
-  }
-
-  updateWeights(delta) {
-    const d = nj.array(delta.tolist()[0]);
-    this.w = this.w.add(d);
-  }
-}
-
-class Layer {
-  neurones = [];
-  input = [];
-  output = [];
-
-  constructor(numInputs, numNeurones) {
-    this.neurones = Array(numNeurones)
-      .fill()
-      .map(() => new Neurone(numInputs));
-  }
-
-  get arrayOutput() {
-    return nj.array(this.output);
-  }
-
-  get arrayInput() {
-    return Neurone.formatInput(this.input);
-  }
-
-  get weights() {
-    return this.neurones.map(n => n.weights.slice(1));
-  }
-
-  get nets() {
-    return this.neurones.map(n => n.activation(this.input));
-  }
-
-  get classifiedOutput() {
-    return this.nets.map(Neurone.outputStep);
-  }
-
-  feedForward(input) {
-    this.input = input;
-    this.output = this.neurones.map(n => n.process(input));
-  }
-
-  updateWeights(learningRate) {
-    const rowInput = this.arrayInput.reshape(1, this.arrayInput.size);
-    const deltaWeight = this.sensibility.dot(rowInput).multiply(learningRate);
-    this.neurones.map((n, i) => n.updateWeights(deltaWeight.slice([i, i + 1])));
-  }
-
-  updateSensibility(nextWeights, nextSensibility) {
-    const s = nj.array(nextSensibility);
-    const w = nj.array(nextWeights);
-    const derivative = nj.array(this.nets.map(dsigmoid));
-    const diagDerivate = nj.diag(derivative);
-
-    this.sensibility = diagDerivate.dot(w.T.dot(s));
-  }
-
-  outputSensibility(error) {
-    const derivative = nj.array(this.nets.map(dsigmoid));
-    const sensibility = derivative.multiply(error);
-
-    this.sensibility = sensibility.reshape(sensibility.size, 1);
-  }
-}
+import { range } from '@/lib';
+import Layer from './Layer';
 
 class MultiLayerNetwork {
   hiddenLayers = [];
@@ -146,12 +32,12 @@ class MultiLayerNetwork {
     this.learningRate = learningRate;
 
     for (const epoch of range(1, maxEpoch + 1)) {
-      console.log('EPOCH', epoch);
+      // console.log('EPOCH', epoch);
       trainingResults = trainingSet.map(this.trainingCycle.bind(this));
       epochError = trainingResults.reduce((acc, { error }) => acc + error, 0);
 
       this.msError = epochError / trainingResults.length;
-      console.log('MSE', this.msError);
+      // console.log('MSE', this.msError);
 
       if (this.stopCondition()) {
         this.isTrained = true;

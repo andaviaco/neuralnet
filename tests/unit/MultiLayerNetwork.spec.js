@@ -1,4 +1,4 @@
-import MultiLayerNetwork from '@/models/MultiLayerNetwork.js';
+import MultiLayerNetwork from '@/models/MultiLayerNetwork/MultiLayerNetwork.js';
 
 describe('MultiLayerNetwork', () => {
   it('can be trained successfully.', () => {
