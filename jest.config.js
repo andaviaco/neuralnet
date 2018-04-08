@@ -3,7 +3,8 @@ module.exports = {
     'js',
     'jsx',
     'json',
-    'vue'
+    'vue',
+    'node',
   ],
   transform: {
     '^.+\\.vue$': 'vue-jest',
