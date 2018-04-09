@@ -1,5 +1,16 @@
 <template lang="html">
   <svg class="cartesian" :width="svgWidth" :height="svgHeight" @click="clickCoord">
+    <rect
+      v-for="(p, index) in classifiedArea"
+      :key="index + p.x + p.y"
+      :x="p.x"
+      :y="p.y"
+      :fill="p.color"
+      fill-opacity="0.2"
+      width="5"
+      height="5"
+    />
+
     <line
       v-for="(l, index) in lines"
       :key="index + l"
@@ -105,6 +116,16 @@ export default class Cartesian extends Vue {
         color: lineTypecolorMap[type],
       };
     });
+  }
+
+  get classifiedArea() {
+    const { classifiedArea } = this.$store.state;
+
+    return classifiedArea.map(p => ({
+      x: this.xScale(p.x),
+      y: this.yScale(p.y),
+      color: pointTypeColorMap[p.type],
+    }));
   }
 
   clickCoord({ offsetX, offsetY }) {
