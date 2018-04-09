@@ -1,13 +1,21 @@
 import nj from 'numjs';
 
 import { range } from '@/lib';
+import {
+  NEURON_STATUS_UNTRAINED,
+  NEURON_STATUS_TRAINING,
+  NEURON_STATUS_TRAINED,
+} from '@/const';
+
 import Layer from './Layer';
 
 class MultiLayerNetwork {
   hiddenLayers = [];
   outputLayer = null;
   msError = 1;
+  epoch = 0;
   isTrained = false;
+  state = NEURON_STATUS_UNTRAINED;
 
   constructor(numInputs, numClasses, numHiddenLayers, numNeurones) {
     const inputLayer = new Layer(numInputs, numNeurones);
@@ -24,14 +32,20 @@ class MultiLayerNetwork {
     this.outputLayer = new Layer(numNeurones, numClasses);
   }
 
-  train(trainingSet, learningRate, maxEpoch, desiredError) {
+  get formatedStatus() {
+    return this.state;
+  }
+
+  async startTraining(trainingSet, learningRate, maxEpoch, desiredError) {
     let epochError = 0;
     let trainingResults = [];
 
     this.desiredError = desiredError;
     this.learningRate = learningRate;
+    this.state = NEURON_STATUS_TRAINING;
 
     for (const epoch of range(1, maxEpoch + 1)) {
+      this.epoch = epoch;
       // console.log('EPOCH', epoch);
       trainingResults = trainingSet.map(this.trainingCycle.bind(this));
       epochError = trainingResults.reduce((acc, { error }) => acc + error, 0);
@@ -45,6 +59,14 @@ class MultiLayerNetwork {
         break;
       }
     }
+
+    if (this.isTrained) {
+      this.state = NEURON_STATUS_TRAINED;
+    } else {
+      this.state = NEURON_STATUS_UNTRAINED;
+    }
+
+    return this.isTrained;
   }
 
   trainingCycle([input, expected]) {
@@ -88,7 +110,7 @@ class MultiLayerNetwork {
     allLayers.forEach(l => l.updateWeights(this.learningRate));
   }
 
-  classify(input) {
+  classifyInput(input) {
     this.forwardPropagate(input);
 
     return this.outputLayer.classifiedOutput;

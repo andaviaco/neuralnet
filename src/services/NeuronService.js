@@ -1,4 +1,4 @@
-import { Perceptron, Adaline } from '../models';
+import { Perceptron, Adaline, MultiLayerNetwork } from '../models';
 import {
   UPPER_SCALE_DOMAIN,
   LOWER_SCALE_DOMAIN,
@@ -9,43 +9,47 @@ import {
 
 class NeuronService {
   constructor() {
-    this.neurone = null;
+    this.model = null;
   }
 
   get status() {
-    return this.neurone.formatedStatus;
+    return this.model.formatedStatus;
   }
 
   get epoch() {
-    return this.neurone.epoch;
+    return this.model.epoch;
   }
 
   setPerceptron(learningRate, maxEpoch) {
-    this.neurone = new Perceptron(learningRate, maxEpoch, {
+    this.model = new Perceptron(learningRate, maxEpoch, {
       upperBound: UPPER_SCALE_DOMAIN,
       lowerBound: LOWER_SCALE_DOMAIN,
     });
   }
 
   setAdaline(learningRate, maxEpoch, desiredError) {
-    this.neurone = new Adaline(desiredError, learningRate, maxEpoch, {
+    this.model = new Adaline(desiredError, learningRate, maxEpoch, {
       upperBound: ADALINE_WEIGHTS_INITIAL_LOWER_BOUND,
       lowerBound: ADALINE_WEIGHTS_INITIAL_UPPER_BOUND,
     });
   }
 
-  train(inputs) {
-    return this.neurone.startTraining(inputs);
+  setMLN(hiddenLayers, layerNeurones) {
+    this.model = new MultiLayerNetwork(2, 1, hiddenLayers, layerNeurones);
+  }
+
+  train(...args) {
+    return this.model.startTraining(...args);
   }
 
   classifyInput(input) {
-    return this.neurone.classifyInput(input);
+    return this.model.classifyInput(input);
   }
 
   getLine(weights) {
     return {
-      point1: [UPPER_SCALE_DOMAIN, this.neurone.lineFn(UPPER_SCALE_DOMAIN, weights)],
-      point2: [LOWER_SCALE_DOMAIN, this.neurone.lineFn(LOWER_SCALE_DOMAIN, weights)],
+      point1: [UPPER_SCALE_DOMAIN, this.model.lineFn(UPPER_SCALE_DOMAIN, weights)],
+      point2: [LOWER_SCALE_DOMAIN, this.model.lineFn(LOWER_SCALE_DOMAIN, weights)],
     };
   }
 }
