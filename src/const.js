@@ -21,19 +21,23 @@ export const DRAWING_SPEED = 25;
 
 export const POINT_TYPE_1 = 0;
 export const POINT_TYPE_2 = 1;
+export const POINT_TYPE_3 = 2;
 
-export const TOOL_POINT_TYPE_1 = 'minus';
-export const TOOL_POINT_TYPE_2 = 'plus';
+export const TOOL_POINT_TYPE_1 = 'class1';
+export const TOOL_POINT_TYPE_2 = 'class2';
+export const TOOL_POINT_TYPE_3 = 'class3';
 export const DEFAULT_TOOL = TOOL_POINT_TYPE_1;
 
 export const pointTypeColorMap = {
   [POINT_TYPE_1]: '#409EFF', // blue
   [POINT_TYPE_2]: '#67C23A', // green
+  [POINT_TYPE_3]: '#E6A23C', // yellow
 };
 
 export const toolPointTypeMap = {
   [TOOL_POINT_TYPE_1]: POINT_TYPE_1,
   [TOOL_POINT_TYPE_2]: POINT_TYPE_2,
+  [TOOL_POINT_TYPE_3]: POINT_TYPE_3,
 };
 
 export const neuronStates = {
@@ -87,6 +91,7 @@ export default {
 
   TOOL_POINT_TYPE_1,
   TOOL_POINT_TYPE_2,
+  TOOL_POINT_TYPE_3,
   DEFAULT_TOOL,
 
   pointTypeColorMap,

@@ -49,11 +49,18 @@ import {
   LOWER_SCALE_DOMAIN,
   TOOL_POINT_TYPE_1,
   TOOL_POINT_TYPE_2,
+  TOOL_POINT_TYPE_3,
   pointTypeColorMap,
   toolPointTypeMap,
   lineTypecolorMap,
   NEURON_STATUS_TRAINED,
 } from '../const';
+
+const validPoints = [
+  TOOL_POINT_TYPE_1,
+  TOOL_POINT_TYPE_2,
+  TOOL_POINT_TYPE_3,
+];
 
 
 @Component
@@ -103,7 +110,7 @@ export default class Cartesian extends Vue {
   clickCoord({ offsetX, offsetY }) {
     const { selectedTool, neuronStatus } = this.$store.state;
 
-    if ([TOOL_POINT_TYPE_1, TOOL_POINT_TYPE_2].includes(selectedTool)) {
+    if (validPoints.includes(selectedTool)) {
       if (neuronStatus === NEURON_STATUS_TRAINED) {
         this.$store.dispatch('addUnclassifiedPoint', this.formatPoint(offsetX, offsetY));
       } else {

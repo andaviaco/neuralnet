@@ -16,6 +16,14 @@
       :class="{ active: selected === tools.pointType1 }"
       @click="handleToolSelect(tools.pointType1)"
     />
+    <el-button
+      plain
+      type="warning"
+      size="mini"
+      icon="el-icon-circle-close-outline"
+      :class="{ active: selected === tools.pointType3 }"
+      @click="handleToolSelect(tools.pointType3)"
+    />
   </el-button-group>
 </template>
 
@@ -26,6 +34,7 @@ import Component from 'vue-class-component';
 import {
   TOOL_POINT_TYPE_1,
   TOOL_POINT_TYPE_2,
+  TOOL_POINT_TYPE_3,
   DEFAULT_TOOL,
 } from '../const';
 
@@ -35,6 +44,7 @@ export default class Tools extends Vue {
   tools = {
     pointType1: TOOL_POINT_TYPE_1,
     pointType2: TOOL_POINT_TYPE_2,
+    pointType3: TOOL_POINT_TYPE_3,
   };
 
   handleToolSelect(toolName) {
@@ -55,6 +65,12 @@ export default class Tools extends Vue {
 .el-button--primary.is-plain.active {
   background: #409EFF;
   border-color: #409EFF;
+  color: #fff;
+}
+
+.el-button--warning.is-plain.active {
+  background: #E6A23C;
+  border-color: #E6A23C;
   color: #fff;
 }
 </style>
