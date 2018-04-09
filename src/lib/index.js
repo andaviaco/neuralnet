@@ -1,5 +1,13 @@
 import _ from 'lodash';
 
+import {
+  CLASS_TYPE_1,
+  CLASS_TYPE_2,
+  POINT_TYPE_1,
+  POINT_TYPE_2,
+  POINT_TYPE_3,
+} from '@/const';
+
 export function randomNumberInRange(min, max) {
   return _.random(min, max, true);
 }
@@ -44,4 +52,16 @@ export function rangePairs(from, to, step) {
   const a = range(from, to, step);
 
   return a.map(v => a.map(u => [v, u])).reduce((acc, t) => [...acc, ...t], []);
+}
+
+export function classToType(output) {
+  if (_.isEqual(CLASS_TYPE_1, output)) {
+    return POINT_TYPE_1;
+  }
+
+  if (_.isEqual(CLASS_TYPE_2, output)) {
+    return POINT_TYPE_2;
+  }
+
+  return POINT_TYPE_3;
 }

@@ -1,10 +1,11 @@
-import { Perceptron, Adaline, MultiLayerNetwork } from '../models';
+import { Perceptron, Adaline, MultiLayerNetwork } from '@/models';
+import { classToType } from '@/lib';
 import {
   UPPER_SCALE_DOMAIN,
   LOWER_SCALE_DOMAIN,
   ADALINE_WEIGHTS_INITIAL_LOWER_BOUND,
   ADALINE_WEIGHTS_INITIAL_UPPER_BOUND,
-} from '../const';
+} from '@/const';
 
 
 class NeuronService {
@@ -35,7 +36,8 @@ class NeuronService {
   }
 
   setMLN(hiddenLayers, layerNeurones) {
-    this.model = new MultiLayerNetwork(2, 1, hiddenLayers, layerNeurones);
+    // TODO: use contants
+    this.model = new MultiLayerNetwork(2, 2, hiddenLayers, layerNeurones);
   }
 
   train(...args) {
@@ -43,7 +45,13 @@ class NeuronService {
   }
 
   classifyInput(input) {
-    return this.model.classifyInput(input);
+    const output = this.model.classifyInput(input);
+
+    if (this.model instanceof MultiLayerNetwork) {
+      return classToType(output);
+    }
+
+    return output;
   }
 
   getLine(weights) {

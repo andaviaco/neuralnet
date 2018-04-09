@@ -28,9 +28,13 @@ import {
   ACTIVATE_LOADING,
   DEACTIVATE_LOADING,
   CLEAR_TRAINING,
+} from '../store';
+
+import {
   UPPER_SCALE_DOMAIN,
   LOWER_SCALE_DOMAIN,
-} from '../store';
+  CLASSIFIED_AREA_STEP,
+} from '../const';
 
 @Component({
   components: {
@@ -110,7 +114,7 @@ export default class Main {
     console.log('isTrained', isTrained);
 
     if (isTrained) {
-      const pairs = rangePairs(UPPER_SCALE_DOMAIN, LOWER_SCALE_DOMAIN, -0.25);
+      const pairs = rangePairs(UPPER_SCALE_DOMAIN, LOWER_SCALE_DOMAIN, CLASSIFIED_AREA_STEP);
 
       this.$store.dispatch('fillClassifiedArea', pairs);
     } else {

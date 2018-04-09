@@ -32,7 +32,7 @@ export default {
     dispatch('drawNeuronLine', { type: NeuronService.status });
   },
 
-  setMLN({ dispatch }, { hiddenLayers, layerNeurones }) {
+  setMLN(_, { hiddenLayers, layerNeurones }) {
     NeuronService.setMLN(hiddenLayers, layerNeurones);
   },
 
@@ -95,7 +95,7 @@ export default {
     commit(ADD_POINT, { x, y, type: classification });
   },
 
-  classifyPoint({ commit }, { x, y }) {
+  classifyPoint(_, { x, y }) {
     const classification = NeuronService.classifyInput([x, y]);
 
     return classification;
@@ -107,7 +107,7 @@ export default {
     await Promise.all(points.map(async ([x, y]) => {
       const pointClass = await dispatch('classifyPoint', { x, y });
 
-      commit(ADD_CLASSIFIED_AREA_POINT, { x, y, type: pointClass[0] });
+      commit(ADD_CLASSIFIED_AREA_POINT, { x, y, type: pointClass });
     }));
 
     commit(DEACTIVATE_LOADING);

@@ -11,6 +11,7 @@ export const SVG_CARTESIAN_HEIGHT = 350;
 export const SVG_CARTESIAN_PADDING = 10;
 export const UPPER_SCALE_DOMAIN = 10;
 export const LOWER_SCALE_DOMAIN = -10;
+export const CLASSIFIED_AREA_STEP = -0.3;
 
 export const SVG_ERRORCHART_WIDTH = 500;
 export const SVG_ERRORCHART_HEIGHT = 150;
@@ -22,6 +23,10 @@ export const DRAWING_SPEED = 25;
 export const POINT_TYPE_1 = 0;
 export const POINT_TYPE_2 = 1;
 export const POINT_TYPE_3 = 2;
+
+export const CLASS_TYPE_1 = [0, 0];
+export const CLASS_TYPE_2 = [0, 1];
+export const CLASS_TYPE_3 = [1, 0];
 
 export const TOOL_POINT_TYPE_1 = 'class1';
 export const TOOL_POINT_TYPE_2 = 'class2';
@@ -41,9 +46,9 @@ export const toolPointTypeMap = {
 };
 
 export const CLASS_DISCRETE_MAP = {
-  [POINT_TYPE_1]: [0],
-  [POINT_TYPE_2]: [1],
-  [POINT_TYPE_3]: [2],
+  [POINT_TYPE_1]: CLASS_TYPE_1,
+  [POINT_TYPE_2]: CLASS_TYPE_2,
+  [POINT_TYPE_3]: CLASS_TYPE_3,
 };
 
 export const neuronStates = {
@@ -89,6 +94,7 @@ export default {
   SVG_CARTESIAN_PADDING,
   UPPER_SCALE_DOMAIN,
   LOWER_SCALE_DOMAIN,
+  CLASSIFIED_AREA_STEP,
 
   DRAWING_SPEED,
 

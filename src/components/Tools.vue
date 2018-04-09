@@ -12,7 +12,7 @@
       plain
       type="primary"
       size="mini"
-      icon="el-icon-remove-outline"
+      icon="el-icon-remove"
       :class="{ active: selected === tools.pointType1 }"
       @click="handleToolSelect(tools.pointType1)"
     />
@@ -20,7 +20,7 @@
       plain
       type="warning"
       size="mini"
-      icon="el-icon-circle-close-outline"
+      icon="el-icon-circle-close"
       :class="{ active: selected === tools.pointType3 }"
       @click="handleToolSelect(tools.pointType3)"
     />

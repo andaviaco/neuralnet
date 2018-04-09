@@ -2,7 +2,7 @@
   <svg class="cartesian" :width="svgWidth" :height="svgHeight" @click="clickCoord">
     <rect
       v-for="(p, index) in classifiedArea"
-      :key="index + p.x + p.y"
+      :key="index + 'x' + p.x + 'y' + p.y"
       :x="p.x"
       :y="p.y"
       :fill="p.color"
