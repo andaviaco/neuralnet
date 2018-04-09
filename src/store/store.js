@@ -25,6 +25,8 @@ export default new Vuex.Store({
     desiredError: DEFAULT_DESIRED_ERROR,
     errorLog: [],
     loading: false,
+    mlnHiddenLayers: 1,
+    mlnLayerNeurones: 3,
   },
   getters: {
     pointAsArrays(state) {
@@ -38,11 +40,11 @@ export default new Vuex.Store({
     [types.UPDATE_SELECTED_TOOL](state, { tool }) {
       state.selectedTool = tool;
     },
-    [types.UPDATE_LEARNING_RATE](state, { learningRate }) {
-      state.learningRate = learningRate;
+    [types.UPDATE_LEARNING_RATE](state, value) {
+      state.learningRate = value;
     },
-    [types.UPDATE_MAX_EPOCH](state, { maxEpoch }) {
-      state.maxEpoch = maxEpoch;
+    [types.UPDATE_MAX_EPOCH](state, value) {
+      state.maxEpoch = value;
     },
     [types.ADD_POINT](state, { x, y, type }) {
       state.points = [...state.points, { x, y, type }];
@@ -56,11 +58,18 @@ export default new Vuex.Store({
     [types.UPDATE_NEURON_STATUS](state, { status }) {
       state.neuronStatus = status;
     },
-    [types.UPDATE_NEURON_EPOCH](state, { epoch }) {
-      state.neuronEpoch = epoch;
+    [types.UPDATE_NEURON_EPOCH](state, value) {
+      state.neuronEpoch = value;
     },
-    [types.UPDATE_DESIRED_ERROR](state, { error }) {
-      state.desiredError = error;
+    [types.UPDATE_DESIRED_ERROR](state, value) {
+      state.desiredError = value;
+    },
+    [types.UPDATE_MLN_HIDDEN_LAYERS](state, value) {
+      state.mlnHiddenLayers = value;
+    },
+    [types.UPDATE_MLN_LAYER_NEURONES](state, value) {
+      console.log('layerNeurones', value);
+      state.mlnLayerNeurones = value;
     },
     [types.ACTIVATE_LOADING](state) {
       state.loading = true;

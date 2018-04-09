@@ -7,11 +7,18 @@
           label="perceptron"
           v-model="selectedModel"
         >Perceptrón</el-radio>
+
         <el-radio
           border
           label="adaline"
           v-model="selectedModel"
         >Adaline</el-radio>
+
+        <el-radio
+          border
+          label="mln"
+          v-model="selectedModel"
+        >MLN</el-radio>
       </el-form-item>
     </el-form-item>
 
@@ -27,7 +34,7 @@
       </el-slider>
     </el-form-item>
 
-    <el-form-item label="Error deseado" v-if="selectedModel === 'adaline'">
+    <el-form-item label="Error deseado" v-if="showField('adaline', 'mln')">
       <el-slider
         :value="desiredError"
         :min="0.0001"
@@ -43,8 +50,35 @@
       <el-input-number
         :value="maxEpoch"
         :min="1"
-        @input="handleMaxEpoch"
+        @change="handleMaxEpoch"
       ></el-input-number>
+    </el-form-item>
+
+    <el-form-item label="Arquitectura" v-if="showField('mln')">
+      <el-tooltip
+        effect="dark"
+        content="Capas ocultas"
+        placement="bottom"
+      >
+        <el-input-number
+          controls-position="right"
+          :value="mlnHiddenLayers"
+          :min="1"
+          @change="handleHiddenLayers"
+        ></el-input-number>
+      </el-tooltip>
+      <el-tooltip
+        effect="dark"
+        content="Neuronas por capa"
+        placement="bottom"
+      >
+        <el-input-number
+          controls-position="right"
+          :value="mlnLayerNeurones"
+          :min="1"
+          @change="handleLayerNeurones"
+        ></el-input-number>
+      </el-tooltip>
     </el-form-item>
 
     <el-form-item>
@@ -65,12 +99,22 @@ import {
   UPDATE_LEARNING_RATE,
   UPDATE_MAX_EPOCH,
   UPDATE_DESIRED_ERROR,
+  UPDATE_MLN_HIDDEN_LAYERS,
+  UPDATE_MLN_LAYER_NEURONES,
 } from '../store/index';
+
+const FIELD_UPDATE_ACTION = {
+  learningRate: UPDATE_LEARNING_RATE,
+  maxEpoch: UPDATE_MAX_EPOCH,
+  error: UPDATE_DESIRED_ERROR,
+  mlnHiddenLayers: UPDATE_MLN_HIDDEN_LAYERS,
+  mlnLayerNeurones: UPDATE_MLN_LAYER_NEURONES,
+};
 
 
 @Component
 export default class SetupForm extends Vue {
-  selectedModel = 'adaline';
+  selectedModel = 'mln';
 
   get learningRate() {
     return this.$store.state.learningRate;
@@ -84,23 +128,46 @@ export default class SetupForm extends Vue {
     return this.$store.state.desiredError;
   }
 
+  get mlnHiddenLayers() {
+    return this.$store.state.mlnHiddenLayers;
+  }
+
+  get mlnLayerNeurones() {
+    return this.$store.state.mlnLayerNeurones;
+  }
+
   get isLoading() {
     return this.$store.state.loading;
   }
 
-  handleLearningRateUpdate(value) {
+  handleUpdate(field, value) {
     // TODO: debounce update
-    this.$store.commit(UPDATE_LEARNING_RATE, { learningRate: value });
+    this.$store.commit(FIELD_UPDATE_ACTION[field], value);
+  }
+
+  handleLearningRateUpdate(value) {
+    this.handleUpdate('learningRate', value);
   }
 
   handleMaxEpoch(value) {
-    // TODO: debounce update
-    this.$store.commit(UPDATE_MAX_EPOCH, { maxEpoch: value });
+    this.handleUpdate('maxEpoch', value);
   }
 
   handleDesiredErrorUpdate(value) {
-    // TODO: debounce update
-    this.$store.commit(UPDATE_DESIRED_ERROR, { error: value });
+    this.handleUpdate('error', value);
+  }
+
+  handleHiddenLayers(value) {
+    this.handleUpdate('mlnHiddenLayers', value);
+  }
+
+
+  handleLayerNeurones(value) {
+    this.handleUpdate('mlnLayerNeurones', value);
+  }
+
+  showField(...allowed) {
+    return allowed.includes(this.selectedModel);
   }
 
   onTrainModel() {
