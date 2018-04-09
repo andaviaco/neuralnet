@@ -9,6 +9,7 @@ import {
   DEFAULT_LEARNING_RATE,
   DEFAULT_DESIRED_ERROR,
   NEURON_STATUS_UNTRAINED,
+  CLASS_DISCRETE_MAP,
 } from '../const';
 
 Vue.use(Vuex);
@@ -27,10 +28,14 @@ export default new Vuex.Store({
     loading: false,
     mlnHiddenLayers: 1,
     mlnLayerNeurones: 3,
+    classifiedArea: [],
   },
   getters: {
     pointAsArrays(state) {
       return state.points.map(p => [[p.x, p.y], p.type]);
+    },
+    discretePointAsArrays(state) {
+      return state.points.map(p => [[p.x, p.y], CLASS_DISCRETE_MAP[p.type]]);
     },
   },
   mutations: {
@@ -71,6 +76,12 @@ export default new Vuex.Store({
       console.log('layerNeurones', value);
       state.mlnLayerNeurones = value;
     },
+    [types.UPDATE_CLASSIFIED_AREA](state, value) {
+      state.classifiedArea = value;
+    },
+    [types.ADD_CLASSIFIED_AREA_POINT](state, { x, y, type }) {
+      state.classifiedArea = [...state.classifiedArea, { x, y, type }];
+    },
     [types.ACTIVATE_LOADING](state) {
       state.loading = true;
     },
@@ -79,6 +90,7 @@ export default new Vuex.Store({
     },
     [types.CLEAR_TRAINING](state) {
       state.lines = [];
+      state.classifiedArea = [];
     },
   },
 

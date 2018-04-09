@@ -6,6 +6,9 @@ import {
   ADD_ERROR_LOG,
   UPDATE_NEURON_STATUS,
   UPDATE_NEURON_EPOCH,
+  ACTIVATE_LOADING,
+  DEACTIVATE_LOADING,
+  ADD_CLASSIFIED_AREA_POINT,
 } from './mutation-types';
 import { DRAWING_SPEED } from '../const';
 
@@ -29,11 +32,15 @@ export default {
     dispatch('drawNeuronLine', { type: NeuronService.status });
   },
 
+  setMLN({ dispatch }, { hiddenLayers, layerNeurones }) {
+    NeuronService.setMLN(hiddenLayers, layerNeurones);
+  },
+
   async trainPerceptron({ commit, dispatch }, { inputs }) {
     const result = await NeuronService.train(inputs);
 
     commit(UPDATE_NEURON_STATUS, { status: NeuronService.status });
-    commit(UPDATE_NEURON_EPOCH, { epoch: NeuronService.epoch });
+    commit(UPDATE_NEURON_EPOCH, NeuronService.epoch);
 
     dispatch('drawNeuronLine', { type: NeuronService.status });
 
@@ -53,7 +60,7 @@ export default {
 
       dispatch('drawNeuronLine', { type: status, weights });
       commit(ADD_ERROR_LOG, { error, epoch });
-      commit(UPDATE_NEURON_EPOCH, { epoch });
+      commit(UPDATE_NEURON_EPOCH, epoch);
 
       // eslint-disable-next-line no-await-in-loop
       await delay(DRAWING_SPEED);
@@ -65,9 +72,44 @@ export default {
     return result.isTrained;
   },
 
+  async trainMLN({ commit }, setup) {
+    commit(ACTIVATE_LOADING);
+
+    const result = await NeuronService.train(
+      setup.inputs,
+      setup.learningRate,
+      setup.maxEpoch,
+      setup.desiredError,
+    );
+
+    commit(UPDATE_NEURON_STATUS, { status: NeuronService.status });
+    commit(UPDATE_NEURON_EPOCH, NeuronService.epoch);
+    commit(DEACTIVATE_LOADING);
+
+    return result;
+  },
+
   addUnclassifiedPoint({ commit }, { x, y }) {
     const classification = NeuronService.classifyInput([x, y]);
 
     commit(ADD_POINT, { x, y, type: classification });
+  },
+
+  classifyPoint({ commit }, { x, y }) {
+    const classification = NeuronService.classifyInput([x, y]);
+
+    return classification;
+  },
+
+  async fillClassifiedArea({ commit, dispatch }, points) {
+    commit(ACTIVATE_LOADING);
+
+    await Promise.all(points.map(async ([x, y]) => {
+      const pointClass = await dispatch('classifyPoint', { x, y });
+
+      commit(ADD_CLASSIFIED_AREA_POINT, { x, y, type: pointClass[0] });
+    }));
+
+    commit(DEACTIVATE_LOADING);
   },
 };

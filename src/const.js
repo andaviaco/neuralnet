@@ -40,6 +40,12 @@ export const toolPointTypeMap = {
   [TOOL_POINT_TYPE_3]: POINT_TYPE_3,
 };
 
+export const CLASS_DISCRETE_MAP = {
+  [POINT_TYPE_1]: [0],
+  [POINT_TYPE_2]: [1],
+  [POINT_TYPE_3]: [2],
+};
+
 export const neuronStates = {
   UNTRAINED: 0,
   TRAINING: 1,
