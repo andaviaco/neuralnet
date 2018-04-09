@@ -11,6 +11,7 @@
         <SetupForm
           @startPerceptronTraining="handlePerceptronTrainingStart"
           @startAdalineTraining="handleAdalineTrainingStart"
+          @startMlnTraining="handleMlnTrainingStart"
         />
       </el-col>
     </el-row>
@@ -21,11 +22,14 @@
 import Component from 'vue-class-component';
 import SetupForm from './SetupForm.vue';
 import Plot from './Plot.vue';
+import { rangePairs } from '../lib';
 
 import {
   ACTIVATE_LOADING,
   DEACTIVATE_LOADING,
   CLEAR_TRAINING,
+  UPPER_SCALE_DOMAIN,
+  LOWER_SCALE_DOMAIN,
 } from '../store';
 
 @Component({
@@ -75,6 +79,41 @@ export default class Main {
     this.$store.commit(DEACTIVATE_LOADING);
 
     if (!isTrained) {
+      this.notifyTrainingFailure();
+    }
+  }
+
+  async handleMlnTrainingStart() {
+    const {
+      learningRate,
+      maxEpoch,
+      desiredError,
+      mlnHiddenLayers,
+      mlnLayerNeurones,
+    } = this.$store.state;
+    const { discretePointAsArrays } = this.$store.getters;
+
+    this.$store.commit(CLEAR_TRAINING);
+
+    this.$store.dispatch('setMLN', {
+      hiddenLayers: mlnHiddenLayers,
+      layerNeurones: mlnLayerNeurones,
+    });
+
+    const isTrained = await this.$store.dispatch('trainMLN', {
+      inputs: discretePointAsArrays,
+      learningRate,
+      maxEpoch,
+      desiredError,
+    });
+
+    console.log('isTrained', isTrained);
+
+    if (isTrained) {
+      const pairs = rangePairs(UPPER_SCALE_DOMAIN, LOWER_SCALE_DOMAIN, -0.25);
+
+      this.$store.dispatch('fillClassifiedArea', pairs);
+    } else {
       this.notifyTrainingFailure();
     }
   }

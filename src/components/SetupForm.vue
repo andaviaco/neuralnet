@@ -111,6 +111,12 @@ const FIELD_UPDATE_ACTION = {
   mlnLayerNeurones: UPDATE_MLN_LAYER_NEURONES,
 };
 
+const MODEL_START_EVENT = {
+  adaline: 'startAdalineTraining',
+  perceptron: 'startPerceptronTraining',
+  mln: 'startMlnTraining',
+};
+
 
 @Component
 export default class SetupForm extends Vue {
@@ -171,11 +177,7 @@ export default class SetupForm extends Vue {
   }
 
   onTrainModel() {
-    if (this.selectedModel === 'adaline') {
-      this.$emit('startAdalineTraining');
-    } else {
-      this.$emit('startPerceptronTraining');
-    }
+    this.$emit(MODEL_START_EVENT[this.selectedModel]);
   }
 }
 </script>

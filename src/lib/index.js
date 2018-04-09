@@ -39,3 +39,9 @@ export async function delay(time) {
     }, time);
   });
 }
+
+export function rangePairs(from, to, step) {
+  const a = range(from, to, step);
+
+  return a.map(v => a.map(u => [v, u])).reduce((acc, t) => [...acc, ...t], []);
+}
