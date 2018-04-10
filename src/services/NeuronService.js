@@ -11,6 +11,7 @@ import {
 class NeuronService {
   constructor() {
     this.model = null;
+    this.progressLog = [];
   }
 
   get status() {
@@ -38,6 +39,7 @@ class NeuronService {
   setMLN(hiddenLayers, layerNeurones) {
     // TODO: use contants
     this.model = new MultiLayerNetwork(2, 2, hiddenLayers, layerNeurones);
+    this.model.on('trainingProgress', log => this.progressLog.push(log));
   }
 
   train(...args) {

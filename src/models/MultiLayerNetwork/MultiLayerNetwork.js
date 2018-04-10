@@ -1,4 +1,5 @@
 import nj from 'numjs';
+import EventEmitter from 'events';
 
 import { range } from '@/lib';
 import {
@@ -9,7 +10,7 @@ import {
 
 import Layer from './Layer';
 
-class MultiLayerNetwork {
+class MultiLayerNetwork extends EventEmitter {
   hiddenLayers = [];
   outputLayer = null;
   msError = 1;
@@ -18,6 +19,8 @@ class MultiLayerNetwork {
   state = NEURON_STATUS_UNTRAINED;
 
   constructor(numInputs, numClasses, numHiddenLayers, numNeurones) {
+    super();
+
     const inputLayer = new Layer(numInputs, numNeurones);
     const hiddenLayers = Array(numHiddenLayers - 1)
       .fill()
@@ -46,18 +49,17 @@ class MultiLayerNetwork {
 
     for (const epoch of range(1, maxEpoch + 1)) {
       this.epoch = epoch;
-      // console.log('EPOCH', epoch);
       trainingResults = trainingSet.map(this.trainingCycle.bind(this));
       epochError = trainingResults.reduce((acc, { error }) => acc + error, 0);
 
       this.msError = epochError / trainingResults.length;
-      // console.log('MSE', this.msError);
 
       if (this.stopCondition()) {
         this.isTrained = true;
-        console.log('TRAINED');
         break;
       }
+
+      this.logProgress({ epoch, error: this.msError });
     }
 
     if (this.isTrained) {
@@ -65,6 +67,8 @@ class MultiLayerNetwork {
     } else {
       this.state = NEURON_STATUS_UNTRAINED;
     }
+
+    this.logProgress({ epoch: this.epoch, error: this.msError });
 
     return this.isTrained;
   }
@@ -124,6 +128,14 @@ class MultiLayerNetwork {
 
   stopCondition() {
     return this.msError <= this.desiredError;
+  }
+
+  logProgress({ epoch, error }) {
+    this.emit('trainingProgress', {
+      epoch,
+      error,
+      status: this.formatedStatus,
+    });
   }
 }
 
