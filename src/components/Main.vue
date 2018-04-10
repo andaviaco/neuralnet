@@ -1,6 +1,6 @@
 <template>
   <section>
-    <h1>Redes Neuronales: Adeline</h1>
+    <h1>Redes Neuronales: MLN</h1>
 
     <el-row>
       <el-col :span="12">
