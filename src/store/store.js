@@ -73,7 +73,6 @@ export default new Vuex.Store({
       state.mlnHiddenLayers = value;
     },
     [types.UPDATE_MLN_LAYER_NEURONES](state, value) {
-      console.log('layerNeurones', value);
       state.mlnLayerNeurones = value;
     },
     [types.UPDATE_CLASSIFIED_AREA](state, value) {
@@ -91,6 +90,7 @@ export default new Vuex.Store({
     [types.CLEAR_TRAINING](state) {
       state.lines = [];
       state.classifiedArea = [];
+      state.errorLog = [];
     },
   },
 

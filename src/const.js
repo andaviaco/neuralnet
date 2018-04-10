@@ -18,7 +18,7 @@ export const SVG_ERRORCHART_HEIGHT = 150;
 export const UPPER_ERROR_DOMAIN = 1.0;
 export const LOWER_ERROR_DOMAIN = 0;
 
-export const DRAWING_SPEED = 25;
+export const DRAWING_SPEED = 10;
 
 export const POINT_TYPE_1 = 0;
 export const POINT_TYPE_2 = 1;

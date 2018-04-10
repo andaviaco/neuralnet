@@ -72,7 +72,7 @@ export default {
     return result.isTrained;
   },
 
-  async trainMLN({ commit }, setup) {
+  async trainMLN({ commit, dispatch }, setup) {
     commit(ACTIVATE_LOADING);
 
     const result = await NeuronService.train(
@@ -81,6 +81,11 @@ export default {
       setup.maxEpoch,
       setup.desiredError,
     );
+
+    for (const log of NeuronService.progressLog) {
+      // eslint-disable-next-line no-await-in-loop
+      await dispatch('updateTrainingProgress', log);
+    }
 
     commit(UPDATE_NEURON_STATUS, { status: NeuronService.status });
     commit(UPDATE_NEURON_EPOCH, NeuronService.epoch);
@@ -102,14 +107,21 @@ export default {
   },
 
   async fillClassifiedArea({ commit, dispatch }, points) {
-    commit(ACTIVATE_LOADING);
-
-    await Promise.all(points.map(async ([x, y]) => {
+    for (const [x, y] of points) {
+      // eslint-disable-next-line no-await-in-loop
       const pointClass = await dispatch('classifyPoint', { x, y });
 
       commit(ADD_CLASSIFIED_AREA_POINT, { x, y, type: pointClass });
-    }));
 
-    commit(DEACTIVATE_LOADING);
+      // eslint-disable-next-line no-await-in-loop
+      await delay(0);
+    }
+  },
+
+  async updateTrainingProgress({ commit }, { error, epoch }) {
+    commit(ADD_ERROR_LOG, { error, epoch });
+    commit(UPDATE_NEURON_EPOCH, epoch);
+
+    await delay(DRAWING_SPEED);
   },
 };
