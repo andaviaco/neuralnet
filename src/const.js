@@ -11,14 +11,14 @@ export const SVG_CARTESIAN_HEIGHT = 350;
 export const SVG_CARTESIAN_PADDING = 10;
 export const UPPER_SCALE_DOMAIN = 10;
 export const LOWER_SCALE_DOMAIN = -10;
-export const CLASSIFIED_AREA_STEP = -0.3;
+export const CLASSIFIED_AREA_STEP = -0.4;
 
 export const SVG_ERRORCHART_WIDTH = 500;
 export const SVG_ERRORCHART_HEIGHT = 150;
 export const UPPER_ERROR_DOMAIN = 1.0;
 export const LOWER_ERROR_DOMAIN = 0;
 
-export const DRAWING_SPEED = 10;
+export const DRAWING_SPEED = 1;
 
 export const POINT_TYPE_1 = 0;
 export const POINT_TYPE_2 = 1;

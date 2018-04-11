@@ -6,9 +6,9 @@
       :x="p.x"
       :y="p.y"
       :fill="p.color"
-      fill-opacity="0.2"
-      width="5"
-      height="5"
+      fill-opacity="0.3"
+      width="7"
+      height="7"
     />
 
     <line
