@@ -1,4 +1,6 @@
 import _ from 'lodash';
+import math from 'mathjs';
+import nj from 'numjs';
 
 import {
   CLASS_TYPE_1,
@@ -64,4 +66,24 @@ export function classToType(output) {
   }
 
   return POINT_TYPE_3;
+}
+
+export function gaussian(v, center, spread) {
+  const a = nj.array(v);
+  const r = a.subtract(center);
+  return Math.exp(-(r.pow(2).sum()) / (2 * (spread ** 2)));
+}
+
+export function euclideanDistanceNorm(x, y) {
+  const xArray = nj.array(x);
+
+  return math.norm(xArray.subtract(y).tolist());
+}
+
+export function minBy(...args) {
+  return _.minBy(...args);
+}
+
+export function zip(...args) {
+  return _.zip(...args);
 }
