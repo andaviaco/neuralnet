@@ -9,6 +9,7 @@ import {
   ACTIVATE_LOADING,
   DEACTIVATE_LOADING,
   ADD_CLASSIFIED_AREA_POINT,
+  ADD_INTERPOLATION_LINE_POINT,
 } from './mutation-types';
 import { DRAWING_SPEED } from '../const';
 
@@ -151,7 +152,7 @@ export default {
 
       console.log('PREDICTIONS', [x, y]);
 
-      commit(ADD_CLASSIFIED_AREA_POINT, { x, y, type: 1 });
+      commit(ADD_INTERPOLATION_LINE_POINT, { x, y });
 
       // eslint-disable-next-line no-await-in-loop
       await delay(0);

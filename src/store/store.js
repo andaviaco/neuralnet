@@ -29,6 +29,7 @@ export default new Vuex.Store({
     mlnHiddenLayers: 1,
     mlnLayerNeurones: 3,
     classifiedArea: [],
+    interpolationLine: [],
   },
   getters: {
     pointAsArrays(state) {
@@ -84,6 +85,9 @@ export default new Vuex.Store({
     [types.ADD_CLASSIFIED_AREA_POINT](state, { x, y, type }) {
       state.classifiedArea = [...state.classifiedArea, { x, y, type }];
     },
+    [types.ADD_INTERPOLATION_LINE_POINT](state, { x, y }) {
+      state.interpolationLine = [...state.interpolationLine, { x, y }];
+    },
     [types.ACTIVATE_LOADING](state) {
       state.loading = true;
     },
@@ -93,6 +97,7 @@ export default new Vuex.Store({
     [types.CLEAR_TRAINING](state) {
       state.lines = [];
       state.classifiedArea = [];
+      state.interpolationLine = [];
       state.errorLog = [];
     },
   },

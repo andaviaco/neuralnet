@@ -6,6 +6,7 @@ export const ADD_POINT = 'addPoint';
 export const ADD_LINE = 'addErrorLog';
 export const ADD_ERROR_LOG = 'addLine';
 export const ADD_CLASSIFIED_AREA_POINT = 'addClassifiedAreaPoint';
+export const ADD_INTERPOLATION_LINE_POINT = 'addInterpolationLinePoint';
 export const UPDATE_NEURON_STATUS = 'updatePerceptronStatus';
 export const UPDATE_NEURON_EPOCH = 'updateNeuronEpoch';
 export const UPDATE_DESIRED_ERROR = 'updateDesiredError';
@@ -24,6 +25,7 @@ export default {
   ADD_LINE,
   ADD_ERROR_LOG,
   ADD_CLASSIFIED_AREA_POINT,
+  ADD_INTERPOLATION_LINE_POINT,
   UPDATE_NEURON_STATUS,
   UPDATE_NEURON_EPOCH,
   UPDATE_DESIRED_ERROR,

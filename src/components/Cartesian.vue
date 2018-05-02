@@ -1,5 +1,5 @@
 <template lang="html">
-  <svg class="cartesian" :width="svgWidth" :height="svgHeight" @click="clickCoord">
+  <svg class="cartesian" ref="svg" :width="svgWidth" :height="svgHeight" @click="clickCoord">
     <rect
       v-for="(p, index) in classifiedArea"
       :key="index + 'x' + p.x + 'y' + p.y"
@@ -21,6 +21,11 @@
       :stroke="l.color"
       stroke-width="3"
       stroke-opacity="0.4"
+    />
+
+    <polyline
+      class="interpolationline"
+      :points="interpolationLine"
     />
 
     <g
@@ -128,6 +133,15 @@ export default class Cartesian extends Vue {
     }));
   }
 
+  get interpolationLine() {
+    const { interpolationLine } = this.$store.state;
+
+    return interpolationLine
+      .map(p => [this.xScale(p.x), this.yScale(p.y)])
+      .map(p => p.join(' '))
+      .join(', ');
+  }
+
   clickCoord({ offsetX, offsetY }) {
     const { selectedTool, neuronStatus } = this.$store.state;
 
@@ -222,5 +236,12 @@ export default class Cartesian extends Vue {
 
 g path.domain {
   stroke: #4F4F4F;
+}
+
+.interpolationline {
+  fill: none;
+  stroke: #67C23A;
+  stroke-linejoin: round;
+  stroke-width: 3;
 }
 </style>
