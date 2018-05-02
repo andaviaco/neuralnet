@@ -1,5 +1,10 @@
 import nj from 'numjs';
 import { range } from '@/lib';
+import {
+  NEURON_STATUS_UNTRAINED,
+  NEURON_STATUS_TRAINING,
+  NEURON_STATUS_TRAINED,
+} from '@/const';
 import OutputNeurone from './OutputNeurone';
 
 class OutputLayer {
@@ -7,6 +12,7 @@ class OutputLayer {
   inputs = [];
   msError = 1;
   isTrained = false;
+  state = NEURON_STATUS_UNTRAINED;
 
   constructor(numNeurones, numInputs) {
     this.neurones = Array(numNeurones)
@@ -31,6 +37,7 @@ class OutputLayer {
 
     this.desiredError = desiredError;
     this.learningRate = learningRate;
+    this.state = NEURON_STATUS_TRAINING;
 
     for (const epoch of range(1, maxEpoch + 1)) {
       this.epoch = epoch;
@@ -45,6 +52,10 @@ class OutputLayer {
         break;
       }
     }
+
+    this.state = this.isTrained
+      ? NEURON_STATUS_TRAINED
+      : NEURON_STATUS_UNTRAINED;
 
     return this.isTrained;
   }

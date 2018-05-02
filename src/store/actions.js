@@ -114,7 +114,7 @@ export default {
     //   await dispatch('updateTrainingProgress', log);
     // }
 
-    // commit(UPDATE_NEURON_STATUS, { status: NeuronService.status });
+    commit(UPDATE_NEURON_STATUS, { status: NeuronService.status });
     commit(UPDATE_NEURON_EPOCH, NeuronService.epoch);
     commit(DEACTIVATE_LOADING);
 

@@ -17,6 +17,10 @@ class RBFNetwork {
     return this.outputLayer.epoch;
   }
 
+  get formatedStatus() {
+    return this.outputLayer.state;
+  }
+
   startTraining(trainingSet, learningRate, maxEpoch, desiredError) {
     const patterns = trainingSet.map(tset => tset[0]);
     const expected = trainingSet.map(tset => tset[1]);
