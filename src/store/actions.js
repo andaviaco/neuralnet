@@ -36,6 +36,10 @@ export default {
     NeuronService.setMLN(hiddenLayers, layerNeurones);
   },
 
+  setRBF(_, { hiddenLayers, layerNeurones }) {
+    NeuronService.setRBF(hiddenLayers, layerNeurones);
+  },
+
   async trainPerceptron({ commit, dispatch }, { inputs }) {
     const result = await NeuronService.train(inputs);
 
@@ -94,6 +98,28 @@ export default {
     return result;
   },
 
+  async trainRBF({ commit }, setup) {
+    commit(ACTIVATE_LOADING);
+
+    const result = await NeuronService.train(
+      setup.inputs,
+      setup.learningRate,
+      setup.maxEpoch,
+      setup.desiredError,
+    );
+
+    // for (const log of NeuronService.progressLog) {
+    //   // eslint-disable-next-line no-await-in-loop
+    //   await dispatch('updateTrainingProgress', log);
+    // }
+
+    // commit(UPDATE_NEURON_STATUS, { status: NeuronService.status });
+    commit(UPDATE_NEURON_EPOCH, NeuronService.epoch);
+    commit(DEACTIVATE_LOADING);
+
+    return result;
+  },
+
   addUnclassifiedPoint({ commit }, { x, y }) {
     const classification = NeuronService.classifyInput([x, y]);
 
@@ -112,6 +138,20 @@ export default {
       const pointClass = await dispatch('classifyPoint', { x, y });
 
       commit(ADD_CLASSIFIED_AREA_POINT, { x, y, type: pointClass });
+
+      // eslint-disable-next-line no-await-in-loop
+      await delay(0);
+    }
+  },
+
+  async drawPredictionCurve({ commit }, samples) {
+    for (const x of samples) {
+      // eslint-disable-next-line no-await-in-loop
+      const [y] = NeuronService.classifyInput([x]);
+
+      console.log('PREDICTIONS', [x, y]);
+
+      commit(ADD_CLASSIFIED_AREA_POINT, { x, y, type: 1 });
 
       // eslint-disable-next-line no-await-in-loop
       await delay(0);
