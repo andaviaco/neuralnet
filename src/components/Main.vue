@@ -12,6 +12,7 @@
           @startPerceptronTraining="handlePerceptronTrainingStart"
           @startAdalineTraining="handleAdalineTrainingStart"
           @startMlnTraining="handleMlnTrainingStart"
+          @startRbfTraining="handleRbfTrainingStart"
         />
       </el-col>
     </el-row>
@@ -22,7 +23,7 @@
 import Component from 'vue-class-component';
 import SetupForm from './SetupForm.vue';
 import Plot from './Plot.vue';
-import { rangePairs } from '../lib';
+import { rangePairs, range } from '../lib';
 
 import {
   ACTIVATE_LOADING,
@@ -117,6 +118,37 @@ export default class Main {
       const pairs = rangePairs(UPPER_SCALE_DOMAIN, LOWER_SCALE_DOMAIN, CLASSIFIED_AREA_STEP);
 
       this.$store.dispatch('fillClassifiedArea', pairs);
+    } else {
+      this.notifyTrainingFailure();
+    }
+  }
+
+  async handleRbfTrainingStart() {
+    const {
+      learningRate,
+      maxEpoch,
+      desiredError,
+    } = this.$store.state;
+    const { regressionTrainingSet } = this.$store.getters;
+
+    this.$store.commit(CLEAR_TRAINING);
+
+    this.$store.dispatch('setRBF', {});
+
+    console.log('points', regressionTrainingSet);
+
+    const isTrained = await this.$store.dispatch('trainRBF', {
+      inputs: regressionTrainingSet,
+      learningRate,
+      maxEpoch,
+      desiredError,
+    });
+
+    console.log('isTrained', isTrained);
+    if (isTrained) {
+      const samples = range(LOWER_SCALE_DOMAIN, UPPER_SCALE_DOMAIN, 0.1);
+
+      this.$store.dispatch('drawPredictionCurve', samples);
     } else {
       this.notifyTrainingFailure();
     }

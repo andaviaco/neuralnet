@@ -37,6 +37,9 @@ export default new Vuex.Store({
     discretePointAsArrays(state) {
       return state.points.map(p => [[p.x, p.y], CLASS_DISCRETE_MAP[p.type]]);
     },
+    regressionTrainingSet(state) {
+      return state.points.map(p => [[p.x], [p.y]]);
+    },
   },
   mutations: {
     /* eslint-disable no-param-reassign  */
