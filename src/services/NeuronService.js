@@ -22,6 +22,10 @@ class NeuronService {
     return this.model.epoch;
   }
 
+  get trainingLog() {
+    return this.model.trainingLog;
+  }
+
   setPerceptron(learningRate, maxEpoch) {
     this.model = new Perceptron(learningRate, maxEpoch, {
       upperBound: UPPER_SCALE_DOMAIN,

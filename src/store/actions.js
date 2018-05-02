@@ -87,10 +87,8 @@ export default {
       setup.desiredError,
     );
 
-    for (const log of NeuronService.progressLog) {
-      // eslint-disable-next-line no-await-in-loop
-      await dispatch('updateTrainingProgress', log);
-    }
+    dispatch('logProgress', NeuronService.progressLog);
+
 
     commit(UPDATE_NEURON_STATUS, { status: NeuronService.status });
     commit(UPDATE_NEURON_EPOCH, NeuronService.epoch);
@@ -99,7 +97,7 @@ export default {
     return result;
   },
 
-  async trainRBF({ commit }, setup) {
+  async trainRBF({ commit, dispatch }, setup) {
     commit(ACTIVATE_LOADING);
 
     const result = await NeuronService.train(
@@ -109,16 +107,20 @@ export default {
       setup.desiredError,
     );
 
-    // for (const log of NeuronService.progressLog) {
-    //   // eslint-disable-next-line no-await-in-loop
-    //   await dispatch('updateTrainingProgress', log);
-    // }
+    dispatch('logProgress', NeuronService.trainingLog);
 
     commit(UPDATE_NEURON_STATUS, { status: NeuronService.status });
     commit(UPDATE_NEURON_EPOCH, NeuronService.epoch);
     commit(DEACTIVATE_LOADING);
 
     return result;
+  },
+
+  async logProgress({ dispatch }, logs) {
+    for (const log of logs) {
+      // eslint-disable-next-line no-await-in-loop
+      await dispatch('updateTrainingProgress', log);
+    }
   },
 
   addUnclassifiedPoint({ commit }, { x, y }) {
@@ -159,7 +161,7 @@ export default {
 
   async updateTrainingProgress({ commit }, { error, epoch }) {
     commit(ADD_ERROR_LOG, { error, epoch });
-    commit(UPDATE_NEURON_EPOCH, epoch);
+    // commit(UPDATE_NEURON_EPOCH, epoch);
 
     await delay(DRAWING_SPEED);
   },

@@ -13,6 +13,7 @@ class OutputLayer {
   msError = 1;
   isTrained = false;
   state = NEURON_STATUS_UNTRAINED;
+  progressLog = [];
 
   constructor(numNeurones, numInputs) {
     this.neurones = Array(numNeurones)
@@ -38,6 +39,7 @@ class OutputLayer {
     this.desiredError = desiredError;
     this.learningRate = learningRate;
     this.state = NEURON_STATUS_TRAINING;
+    this.progressLog = [];
 
     for (const epoch of range(1, maxEpoch + 1)) {
       this.epoch = epoch;
@@ -47,7 +49,10 @@ class OutputLayer {
 
       this.msError = epochError / trainingResults.length;
 
+      this.logProgress({ epoch, error: this.msError });
+
       if (this.stopCondition()) {
+        console.log('TRAINED');
         this.isTrained = true;
         break;
       }
@@ -56,6 +61,8 @@ class OutputLayer {
     this.state = this.isTrained
       ? NEURON_STATUS_TRAINED
       : NEURON_STATUS_UNTRAINED;
+
+    this.logProgress({ epoch: this.epoch, error: this.msError });
 
     return this.isTrained;
   }
@@ -90,6 +97,14 @@ class OutputLayer {
 
   stopCondition() {
     return this.msError <= this.desiredError;
+  }
+
+  logProgress({ epoch, error }) {
+    this.progressLog.push({
+      epoch,
+      error,
+      status: this.state,
+    });
   }
 }
 
