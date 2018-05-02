@@ -19,6 +19,12 @@
           label="mln"
           v-model="selectedModel"
         >MLN</el-radio>
+
+        <el-radio
+          border
+          label="rbf"
+          v-model="selectedModel"
+        >RBF</el-radio>
       </el-form-item>
     </el-form-item>
 
@@ -34,7 +40,7 @@
       </el-slider>
     </el-form-item>
 
-    <el-form-item label="Error deseado" v-if="showField('adaline', 'mln')">
+    <el-form-item label="Error deseado" v-if="showField('adaline', 'mln', 'rbf')">
       <el-slider
         :value="desiredError"
         :min="0.0001"
@@ -115,12 +121,13 @@ const MODEL_START_EVENT = {
   adaline: 'startAdalineTraining',
   perceptron: 'startPerceptronTraining',
   mln: 'startMlnTraining',
+  rbf: 'startRbfTraining',
 };
 
 
 @Component
 export default class SetupForm extends Vue {
-  selectedModel = 'mln';
+  selectedModel = 'rbf';
 
   get learningRate() {
     return this.$store.state.learningRate;
