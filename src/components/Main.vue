@@ -128,12 +128,13 @@ export default class Main {
       learningRate,
       maxEpoch,
       desiredError,
+      rbfLayerNeurones,
     } = this.$store.state;
     const { regressionTrainingSet } = this.$store.getters;
 
     this.$store.commit(CLEAR_TRAINING);
 
-    this.$store.dispatch('setRBF', {});
+    this.$store.dispatch('setRBF', { rbfLayerNeurones });
 
     console.log('points', regressionTrainingSet);
 

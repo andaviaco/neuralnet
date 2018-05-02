@@ -87,6 +87,15 @@
       </el-tooltip>
     </el-form-item>
 
+    <el-form-item label="Neuronas en capa oculta" v-if="showField('rbf')">
+      <el-input-number
+        controls-position="right"
+        :value="rbfLayerNeurones"
+        :min="1"
+        @change="handleRbfLayerNeurones"
+      ></el-input-number>
+    </el-form-item>
+
     <el-form-item>
       <el-button
         type="primary"
@@ -107,6 +116,7 @@ import {
   UPDATE_DESIRED_ERROR,
   UPDATE_MLN_HIDDEN_LAYERS,
   UPDATE_MLN_LAYER_NEURONES,
+  UPDATE_RBF_LAYER_NEURONES,
 } from '../store/index';
 
 const FIELD_UPDATE_ACTION = {
@@ -115,6 +125,7 @@ const FIELD_UPDATE_ACTION = {
   error: UPDATE_DESIRED_ERROR,
   mlnHiddenLayers: UPDATE_MLN_HIDDEN_LAYERS,
   mlnLayerNeurones: UPDATE_MLN_LAYER_NEURONES,
+  rbfLayerNeurones: UPDATE_RBF_LAYER_NEURONES,
 };
 
 const MODEL_START_EVENT = {
@@ -149,6 +160,10 @@ export default class SetupForm extends Vue {
     return this.$store.state.mlnLayerNeurones;
   }
 
+  get rbfLayerNeurones() {
+    return this.$store.state.rbfLayerNeurones;
+  }
+
   get isLoading() {
     return this.$store.state.loading;
   }
@@ -177,6 +192,10 @@ export default class SetupForm extends Vue {
 
   handleLayerNeurones(value) {
     this.handleUpdate('mlnLayerNeurones', value);
+  }
+
+  handleRbfLayerNeurones(value) {
+    this.handleUpdate('rbfLayerNeurones', value);
   }
 
   showField(...allowed) {

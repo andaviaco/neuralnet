@@ -42,8 +42,8 @@ class NeuronService {
     this.model.on('trainingProgress', log => this.progressLog.push(log));
   }
 
-  setRBF() {
-    this.model = new RBFNetwork(1, 15, 1);
+  setRBF(layerNeurones) {
+    this.model = new RBFNetwork(1, layerNeurones, 1);
   }
 
   train(...args) {

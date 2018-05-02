@@ -12,6 +12,7 @@ export const UPDATE_NEURON_EPOCH = 'updateNeuronEpoch';
 export const UPDATE_DESIRED_ERROR = 'updateDesiredError';
 export const UPDATE_MLN_HIDDEN_LAYERS = 'updateHiddenLayers';
 export const UPDATE_MLN_LAYER_NEURONES = 'updateLayerNeurones';
+export const UPDATE_RBF_LAYER_NEURONES = 'updateRbfLayerNeurones';
 export const UPDATE_CLASSIFIED_AREA = 'updateClassifiedArea';
 export const ACTIVATE_LOADING = 'activateLoading';
 export const DEACTIVATE_LOADING = 'deactivateLoading';
@@ -31,6 +32,7 @@ export default {
   UPDATE_DESIRED_ERROR,
   UPDATE_MLN_HIDDEN_LAYERS,
   UPDATE_MLN_LAYER_NEURONES,
+  UPDATE_RBF_LAYER_NEURONES,
   UPDATE_CLASSIFIED_AREA,
   ACTIVATE_LOADING,
   DEACTIVATE_LOADING,

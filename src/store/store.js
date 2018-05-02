@@ -28,6 +28,7 @@ export default new Vuex.Store({
     loading: false,
     mlnHiddenLayers: 1,
     mlnLayerNeurones: 3,
+    rbfLayerNeurones: 10,
     classifiedArea: [],
     interpolationLine: [],
   },
@@ -78,6 +79,9 @@ export default new Vuex.Store({
     },
     [types.UPDATE_MLN_LAYER_NEURONES](state, value) {
       state.mlnLayerNeurones = value;
+    },
+    [types.UPDATE_RBF_LAYER_NEURONES](state, value) {
+      state.rbfLayerNeurones = value;
     },
     [types.UPDATE_CLASSIFIED_AREA](state, value) {
       state.classifiedArea = value;

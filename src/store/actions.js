@@ -37,8 +37,8 @@ export default {
     NeuronService.setMLN(hiddenLayers, layerNeurones);
   },
 
-  setRBF(_, { hiddenLayers, layerNeurones }) {
-    NeuronService.setRBF(hiddenLayers, layerNeurones);
+  setRBF(_, { rbfLayerNeurones }) {
+    NeuronService.setRBF(rbfLayerNeurones);
   },
 
   async trainPerceptron({ commit, dispatch }, { inputs }) {
@@ -149,8 +149,6 @@ export default {
     for (const x of samples) {
       // eslint-disable-next-line no-await-in-loop
       const [y] = NeuronService.classifyInput([x]);
-
-      console.log('PREDICTIONS', [x, y]);
 
       commit(ADD_INTERPOLATION_LINE_POINT, { x, y });
 
