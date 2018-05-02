@@ -1,4 +1,4 @@
-import { Perceptron, Adaline, MultiLayerNetwork } from '@/models';
+import { Perceptron, Adaline, MultiLayerNetwork, RBFNetwork } from '@/models';
 import { classToType } from '@/lib';
 import {
   UPPER_SCALE_DOMAIN,
@@ -40,6 +40,10 @@ class NeuronService {
     // TODO: use contants
     this.model = new MultiLayerNetwork(2, 2, hiddenLayers, layerNeurones);
     this.model.on('trainingProgress', log => this.progressLog.push(log));
+  }
+
+  setRBF() {
+    this.model = new RBFNetwork(1, 15, 1);
   }
 
   train(...args) {

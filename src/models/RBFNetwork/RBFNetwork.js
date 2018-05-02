@@ -13,6 +13,10 @@ class RBFNetwork {
     this.outputLayer = new OutputLayer(numOutputNeurones, numHiddenNeurons);
   }
 
+  get epoch() {
+    return this.outputLayer.epoch;
+  }
+
   startTraining(trainingSet, learningRate, maxEpoch, desiredError) {
     const patterns = trainingSet.map(tset => tset[0]);
     const expected = trainingSet.map(tset => tset[1]);
@@ -22,14 +26,14 @@ class RBFNetwork {
     const hiddenLayerOutput = this.feedHiddenLayer(patterns);
     const outputTrainingSet = zip(hiddenLayerOutput, expected);
 
-    this.outputLayer.train(outputTrainingSet, learningRate, maxEpoch, desiredError);
+    return this.outputLayer.train(outputTrainingSet, learningRate, maxEpoch, desiredError);
   }
 
   feedHiddenLayer(patterns) {
     return patterns.map(p => this.hiddenLayer.feedForward(p));
   }
 
-  predict(input) {
+  classifyInput(input) {
     const hiddenLayerOutput = this.hiddenLayer.feedForward(input);
     const output = this.outputLayer.feedForward(hiddenLayerOutput);
 

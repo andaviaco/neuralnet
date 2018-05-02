@@ -6,7 +6,7 @@ class RBFNeurone {
   constructor(size) {
     this.spread = 0;
     this.patterns = [];
-    this.center = randomArray(size, -5, 5);
+    this.center = randomArray(size, -10, 10);
   }
 
   activate(input) {

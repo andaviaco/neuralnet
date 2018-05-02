@@ -45,6 +45,8 @@ class OutputLayer {
         break;
       }
     }
+
+    return this.isTrained;
   }
 
   trainingCycle([input, expected]) {
