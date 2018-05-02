@@ -28,6 +28,15 @@
       :points="interpolationLine"
     />
 
+    <circle
+      v-for="(c, index) in rbfCenters"
+      :key="'center' + index"
+      :cx="c.x"
+      :cy="c.y"
+      fill="grey"
+      r="3"
+    />
+
     <g
       ref="xAxis"
       class="axis axis--x"
@@ -140,6 +149,16 @@ export default class Cartesian extends Vue {
       .map(p => [this.xScale(p.x), this.yScale(p.y)])
       .map(p => p.join(' '))
       .join(', ');
+  }
+
+  get rbfCenters() {
+    const { rbfCenters } = this.$store.state;
+
+    return rbfCenters
+      .map(([x, y]) => ({
+        x: this.xScale(x),
+        y: this.yScale(y),
+      }));
   }
 
   clickCoord({ offsetX, offsetY }) {

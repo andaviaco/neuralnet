@@ -28,9 +28,10 @@ export default new Vuex.Store({
     loading: false,
     mlnHiddenLayers: 1,
     mlnLayerNeurones: 3,
-    rbfLayerNeurones: 10,
+    rbfLayerNeurones: 15,
     classifiedArea: [],
     interpolationLine: [],
+    rbfCenters: [],
   },
   getters: {
     pointAsArrays(state) {
@@ -91,6 +92,9 @@ export default new Vuex.Store({
     },
     [types.ADD_INTERPOLATION_LINE_POINT](state, { x, y }) {
       state.interpolationLine = [...state.interpolationLine, { x, y }];
+    },
+    [types.ADD_RBF_CENTER](state, center) {
+      state.rbfCenters = [...state.rbfCenters, center];
     },
     [types.ACTIVATE_LOADING](state) {
       state.loading = true;

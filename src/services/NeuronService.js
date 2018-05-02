@@ -26,6 +26,10 @@ class NeuronService {
     return this.model.trainingLog;
   }
 
+  get rbfCenters() {
+    return this.model.hiddenLayer.neurones.map(n => [...n.center, 0]);
+  }
+
   setPerceptron(learningRate, maxEpoch) {
     this.model = new Perceptron(learningRate, maxEpoch, {
       upperBound: UPPER_SCALE_DOMAIN,

@@ -10,6 +10,7 @@ import {
   DEACTIVATE_LOADING,
   ADD_CLASSIFIED_AREA_POINT,
   ADD_INTERPOLATION_LINE_POINT,
+  ADD_RBF_CENTER,
 } from './mutation-types';
 import { DRAWING_SPEED } from '../const';
 
@@ -37,8 +38,10 @@ export default {
     NeuronService.setMLN(hiddenLayers, layerNeurones);
   },
 
-  setRBF(_, { rbfLayerNeurones }) {
+  setRBF({ dispatch }, { rbfLayerNeurones }) {
     NeuronService.setRBF(rbfLayerNeurones);
+
+    dispatch('drawRbfCenters', NeuronService.rbfCenters);
   },
 
   async trainPerceptron({ commit, dispatch }, { inputs }) {
@@ -164,5 +167,13 @@ export default {
     // commit(UPDATE_NEURON_EPOCH, epoch);
 
     await delay(DRAWING_SPEED);
+  },
+
+  async drawRbfCenters({ commit }, centers) {
+    for (const center of centers) {
+      commit(ADD_RBF_CENTER, center);
+      // eslint-disable-next-line no-await-in-loop
+      await delay(0);
+    }
   },
 };
