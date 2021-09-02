@@ -11,3 +11,6 @@ Neural Networks practices. Implementation with Javascript.
 
 ### v0.03 MLN with Backpropagation
 ![v0.03](/../screenshots/neuralnet_v003.png?raw=true "v0.03 MLN with Backpropagation")
+
+### v0.04 Radial Basis Function (RBF)
+![v0.04](/../screenshots/neuralnet_v004.png?raw=true "v0.04 RBF")
