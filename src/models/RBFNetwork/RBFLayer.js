@@ -41,6 +41,7 @@ class RBFLayer {
     while (reassignations !== 0) {
       reassignations = 0;
 
+      // eslint-disable-next-line no-loop-func
       assignedPatterns = assignedPatterns.map(([p, nearest]) => {
         const newNearest = RBFLayer.nearestCluster(p, this.neurones);
 

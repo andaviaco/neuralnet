@@ -47,6 +47,7 @@ class Neurone {
     return sum;
   }
 
+  /* eslint-disable class-methods-use-this */
   transference(value) {
     return sigmoid(value);
   }
